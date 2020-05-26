@@ -1,0 +1,19 @@
+{
+  "name": "panda-home",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vuepress dev docs",
+    "build": "vuepress build docs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "vuepress": "^1.3.1",
+    "webpack": "^4.41.6",
+    "webpack-cli": "^3.3.11",
+    "yarn": "^1.22.0"
+  }
+}
