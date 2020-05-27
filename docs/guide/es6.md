@@ -18,8 +18,6 @@ async函数就是将 Generator 函数的星号（*）替换成async，将yield�
 - async函数返回的 Promise 对象，必须等到内部所有await命令后面的 Promise 对象执行完，才会发生状态改变，除非遇到return语句或者抛出错误。也就是说，只有async函数内部的异步操作执行完，才会执行then方法指定的回调函数
 #### await
 
-
-
 ## class:
 - 类的所有方法都在类的prototype上。类的实例调用方法就是调用原型上面的方法
 - 类内部定义的方法都是不可枚举的,但是es5可以
