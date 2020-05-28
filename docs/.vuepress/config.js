@@ -13,6 +13,7 @@ module.exports = {
                 '../guide/htmlBase',
                 '../guide/cssBase',
                 '../guide/jsBase',
+                '../guide/es6',
                 '../guide/browserBase',
               ]
             },
