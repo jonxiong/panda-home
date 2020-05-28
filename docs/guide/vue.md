@@ -1,34 +1,141 @@
 # VUE
 
-* [MVVM](#mvvm)
-* [mvvm的优缺点](#mvvm的优缺点)
-* [计算属性vs方法](#计算属性缓存vs方法)
-* [vue性能优化](#vue性能优化)
+- [VUE](#vue)
+  - [mvvm](#mvvm)
+    - [mvvm的优缺点](#mvvm的优缺点)
+  - [对vue的生命周期理解，请求一般放在哪个生命周期](#对vue的生命周期理解请求一般放在哪个生命周期)
+    - [在哪个生命周期内调用异步请求](#在哪个生命周期内调用异步请求)
+    - [在什么阶段才能访问操作DOM](#在什么阶段才能访问操作dom)
+  - [vue的父组件和子组件生命周期钩子函数执行顺序](#vue的父组件和子组件生命周期钩子函数执行顺序)
+    - [父组件可以监听到子组件的生命周期吗？如何监听](#父组件可以监听到子组件的生命周期吗如何监听)
+  - [计算属性vs方法](#计算属性vs方法)
+  - [watch与computed的区别](#watch与computed的区别)
+  - [vue如何实现双向绑定](#vue如何实现双向绑定)
+  - [观察者和发布者订阅模式以及区别](#观察者和发布者订阅模式以及区别)
+  - [vue3跟vue2的区别](#vue3跟vue2的区别)
+    - [proxy与object.definedproperty的优点](#proxy与objectdefinedproperty的优点)
+  - [vue组件间通信有哪几种方式](#vue组件间通信有哪几种方式)
+    - [vuex是做什么的主要解决什么问题，里面的各个文件是如何分工的](#vuex是做什么的主要解决什么问题里面的各个文件是如何分工的)
+  - [如何解决vue渲染白屏问题](#如何解决vue渲染白屏问题)
+    - [使用过VueSSR吗,说说SSR](#使用过vuessr吗说说ssr)
+  - [能说下vue-router中常用的hash和history路由模式实现原理吗](#能说下vue-router中常用的hash和history路由模式实现原理吗)
+    - [hash模式的实现原理](#hash模式的实现原理)
+    - [history模式的实现原理](#history模式的实现原理)
+  - [vue中key的作用](#vue中key的作用)
+  - [vue通过数据劫持可以精准探测数据变化,为什么还需要虚拟dom进行diff检测差异](#vue通过数据劫持可以精准探测数据变化为什么还需要虚拟dom进行diff检测差异)
+  - [如何理解virtualdom](#如何理解virtualdom)
+  - [项目如何选择框架vue/react](#项目如何选择框架vuereact)
+  - [vue性能优化](#vue性能优化)
+  - [高阶组件封装，HOC](#高阶组件封装hoc)
+  - [有写过什么组件，如何做的？设计一个组件的原则](#有写过什么组件如何做的设计一个组件的原则)
 
 ## mvvm
-MVVM 模式，顾名思义即 Model-View-ViewModel 模式
 
-Model 层: 对应数据层的域模型，它主要做域模型的同步。通过 Ajax/fetch 等 API 完成客户端和服务端业务 Model 的同步。在层间关系里，它主要用于抽象出 ViewModel 中视图的 Model。
+MVVM模式，顾名思义即 Model-View-ViewModel 模式
 
-View 层:作为视图模板存在，在 MVVM 里，整个 View 是一个动态模板。除了定义结构、布局外，它展示的是 ViewModel 层的数据和状态。View 层不负责处理状态，View 层做的是 数据绑定的声明、 指令的声明、 事件绑定的声明。
+Model层: 数模模型，它主要做域模型的同步。通过 Ajax/fetch 等 API 完成客户端和服务端业务 Model 的同步。在层间关系里，它主要用于抽象出 ViewModel 中视图的 Model。
+
+View层: 视图层，也就是用户界面， MVVM 里，整个 View 是一个动态模板。除了定义结构、布局外，它展示的是 ViewModel 层的数据和状态。View 层不负责处理状态，View 层做的是 数据绑定的声明、 指令的声明、 事件绑定的声明。
 
 ViewModel 层:把 View 需要的层数据暴露，并对 View 层的 数据绑定声明、 指令声明、 事件绑定声明 负责，也就是处理 View 层的具体业务逻辑。ViewModel 底层会做好绑定属性的监听。当 ViewModel 中数据变化，View 层会得到更新；而当 View 中声明了数据的双向绑定（通常是表单元素），框架也会监听 View 层（表单）值的变化。一旦值变化，View 层绑定的 ViewModel 中的数据也会得到自动更新。
 
 ![2019-07-16-21-47-05]( https://xiaomuzhu-image.oss-cn-beijing.aliyuncs.com/d55fe97b6ef63370645754e1d4a760b6.png)
 
-## mvvm的优缺点
+### mvvm的优缺点
+
 优点:
+
 - 分离视图（View）和模型（Model）,降低代码耦合，提高视图或者逻辑的重用性: 比如视图（View）可以独立于Model变化和修改，一个ViewModel可以绑定不同的"View"上，当View变化的时候Model不可以不变，当Model变化的时候View也可以不变。你可以把一些视图逻辑放在一个ViewModel里面，让很多view重用这段视图逻辑
 - 提高可测试性: ViewModel的存在可以帮助开发者更好地编写测试代码
 - 自动更新dom: 利用双向绑定,数据更新后视图自动更新,让开发者从繁琐的手动dom中解放
 
 缺点:
+
 - Bug很难被调试: 因为使用双向绑定的模式，当你看到界面异常了，有可能是你View的代码有Bug，也可能是Model的代码有问题。数据绑定使得一个位置的Bug被快速传递到别的位置，要定位原始出问题的地方就变得不那么容易了。另外，数据绑定的声明是指令式地写在View的模版当中的，这些内容是没办法去打断点debug的
 - 一个大的模块中model也会很大，虽然使用方便了也很容易保证了数据的一致性，当时长期持有，不释放内存就造成了花费更多的内存
 - 对于大型的图形应用程序，视图状态较多，ViewModel的构建和维护的成本都会比较高
 
-## 计算属性缓存vs方法
-计算属性
+## 对vue的生命周期理解，请求一般放在哪个生命周期
+
+生命周期：
+Vue 实例有一个完整的生命周期，也就是从开始创建、初始化数据、编译模版、挂载 Dom -> 渲染、更新 -> 渲染、卸载等一系列过程，我们称这是 Vue 的生命周期
+
+- beforeCreate:组件实例被创建之初，组件的属性生效之前
+- created:组件实例已经完全创建，属性也绑定，但真实 dom 还没有生成，$el 还不可用
+- beforeMount:在挂载开始之前被调用：相关的 render 函数首次被调用
+- mounted:el 被新创建的 vm.$el 替换，并挂载到实例上去之后调用该钩子
+- beforeUpdate:组件数据更新之前调用，发生在虚拟 DOM 打补丁之前
+- update: 组件数据更新之后
+- activited: keep-alive 专属，组件被激活时调用
+- deactivated: keep-alive 专属，组件被销毁时调用
+- beforeDestory: 组件销毁前调用
+- destoryed: 组件销毁后调用
+
+![0](https://user-gold-cdn.xitu.io/2019/8/19/16ca74f183827f46?imageView2/0/w/1280/h/960/format/webp/ignore-error/1)
+
+### 在哪个生命周期内调用异步请求
+
+官方实例的异步请求是在mounted生命周期中调用的，而实际上也可以在created生命周期中调用
+但是本人推荐在 created 钩子函数中调用异步请求，因为在 created 钩子函数中调用异步请求有以下优点：
+
+- 能更快获取到服务端数据，减少页面 loading 时间；
+- ssr 不支持 beforeMount 、mounted 钩子函数，所以放在 created 中有助于一致性；
+
+### 在什么阶段才能访问操作DOM
+
+在钩子函数 mounted 被调用前，Vue 已经将编译好的模板挂载到页面上，所以在 mounted 中可以访问操作 DOM
+
+## vue的父组件和子组件生命周期钩子函数执行顺序
+
+Vue 的父组件和子组件生命周期钩子函数执行顺序可以归类为以下 4 部分：
+
+- 加载渲染过程
+  - 父 beforeCreate -> 父 created -> 父 beforeMount -> 子 beforeCreate -> 子 created -> 子 beforeMount -> 子 mounted -> 父 mounted
+- 子组件更新过程
+  - 父 beforeUpdate -> 子 beforeUpdate -> 子 updated -> 父 updated
+- 父组件更新过程
+  - 父 beforeUpdate -> 父 updated
+- 销毁过程
+  - 父 beforeDestroy -> 子 beforeDestroy -> 子 destroyed -> 父 destroyed
+
+### 父组件可以监听到子组件的生命周期吗？如何监听
+
+方案一：子组件手动$emit 触发父组件事件
+
+```vue
+// Parent.vue
+<Child @mounted="doSomething"/>
+
+// Child.vue
+mounted() {
+  this.$emit("mounted");
+}
+```
+
+方案二：@hook 方法不仅仅是可以监听 mounted，其它的生命周期事件，例如：created，updated
+
+```vue
+//  Parent.vue
+<Child @hook:mounted="doSomething" ></Child>
+
+doSomething() {
+   console.log('父组件监听到 mounted 钩子函数 ...');
+},
+
+//  Child.vue
+mounted(){
+   console.log('子组件触发 mounted 钩子函数 ...');
+},
+
+// 以上输出顺序为：
+// 子组件触发 mounted 钩子函数 ...
+// 父组件监听到 mounted 钩子函数 ...
+```
+
+## 计算属性vs方法
+
+计算属性:
+
 ```html
 <div id="example">
   <p>Original message: "{{ message }}"</p>
@@ -77,19 +184,6 @@ computed: {
 
 我们为什么需要缓存？假设我们有一个性能开销比较大的计算属性 A，它需要遍历一个巨大的数组并做大量的计算。然后我们可能有其他的计算属性依赖于 A。如果没有缓存，我们将不可避免的多次执行 A 的 getter！如果你不希望有缓存，请用方法来替代。
 
-
-## 对vue的生命周期理解，请求一般放在哪个生命周期
-生命周期：
-Vue 实例有一个完整的生命周期，也就是从开始创建、初始化数据、编译模版、挂载 Dom -> 渲染、更新 -> 渲染、卸载等一系列过程，我们称这是 Vue 的生命周期
-
-官方实例的异步请求是在mounted生命周期中调用的，而实际上也可以在created生命周期中调用
-但是本人推荐在 created 钩子函数中调用异步请求，因为在 created 钩子函数中调用异步请求有以下优点：
-- 能更快获取到服务端数据，减少页面 loading 时间；
-- ssr 不支持 beforeMount 、mounted 钩子函数，所以放在 created 中有助于一致性；
-
-## 在什么阶段才能访问操作DOM
-在钩子函数 mounted 被调用前，Vue 已经将编译好的模板挂载到页面上，所以在 mounted 中可以访问操作 DOM
-
 ## watch与computed的区别
 computed:
 - 1.computed是计算属性,也就是计算值,它更多用于计算值的场景
@@ -106,11 +200,11 @@ watch:
 ## [vue如何实现双向绑定](https://juejin.im/post/5abdd6f6f265da23793c4458)
 利用Object.defineProperty劫持对象的访问器,在属性值发生变化时我们可以获取变化,然后根据变化进行后续响应,在vue3.0中通过Proxy代理对象进行类似的操作。
 
-## 观察者和发布者订阅模式是什么以及区别
+## 观察者和发布者订阅模式以及区别
 
 ## vue3跟vue2的区别
 
-## Proxy与Object.definedProperty的优点
+### proxy与object.definedproperty的优点
 Proxy的优势如下:
 - Proxy可以直接监听对象而非属性
 - Proxy可以直接监听数组的变化
@@ -120,14 +214,14 @@ Proxy的优势如下:
 Object.defineProperty的优势如下:
 - 兼容性好,支持IE9
 
-## vue组件间通信有哪几种方式，组件之间如何通信
+## vue组件间通信有哪几种方式
 - props/$emit+v-on: 通过props将数据自上而下传递，而通过$emit和v-on来向上传递信息。
-- EventBus: 通过EventBus进行信息的发布与订阅
+- EventBus: 通过EventBus进行信息的发布与订阅，用它来触发事件和监听事件，从而实现任何组件间的通信，包括父子、隔代、兄弟组件
 - vuex: 是全局数据管理库，可以通过vuex管理全局的数据流
 - $attrs/$listeners: Vue2.4中加入的$attrs/$listeners可以进行跨级的组件通信
 - provide/inject：以允许一个祖先组件向其所有子孙后代注入一个依赖，不论组件层次有多深，并在起上下游关系成立的时间里始终生效，这成为了跨组件通信的基础
 
-## vuex是做什么的主要解决什么问题，里面的各个文件是如何分工的
+### vuex是做什么的主要解决什么问题，里面的各个文件是如何分工的
 Vuex 是一个专为 Vue.js 应用程序开发的状态管理模式。每一个 Vuex 应用的核心就是 store（仓库）。“store” 基本上就是一个容器，它包含着你的应用中大部分的状态 ( state )。
 - （1）Vuex 的状态存储是响应式的。当 Vue 组件从 store 中读取状态的时候，若 store 中的状态发生变化，那么相应的组件也会相应地得到高效更新。
 - （2）改变 store 中的状态的唯一途径就是显式地提交 (commit) mutation。这样使得我们可以方便地跟踪每一个状态的变化。
@@ -139,6 +233,39 @@ Vuex 是一个专为 Vue.js 应用程序开发的状态管理模式。每一个 
 - Action：用于提交 mutation，而不是直接变更状态，可以包含任意异步操作。
 - Module：允许将单一的 Store 拆分为多个 store 且同时保存在单一的状态树中。
 
+## 如何解决vue渲染白屏问题
+[参考文章](https://juejin.im/post/5bcc169ae51d450e85308d86)
+
+### [使用过VueSSR吗,说说SSR](https://juejin.im/post/5cb6c36e6fb9a068af37aa35)
+> Vue.js 是构建客户端应用程序的框架。默认情况下，可以在浏览器中输出 Vue 组件，进行生成 DOM 和操作 DOM。然而，也可以将同一个组件渲染为服务端的 HTML 字符串，将它们直接发送到浏览器，最后将这些静态标记"激活"为客户端上完全可交互的应用程序。
+即：SSR大致的意思就是vue在客户端将标签渲染成的整个 html 片段的工作在服务端完成，服务端形成的html 片段直接返回给客户端这个过程就叫做服务端渲染。
+
+- ssr渲染的优点：
+    - 更好的 SEO：SPA 页面的内容是通过 Ajax 获取，而搜索引擎爬取工具并不会等待 Ajax 异步完成后再抓取页面内容,ssr则可以
+    - 更快的内容到达时间（首屏加载更快）：SPA 会等待所有 Vue 编译后的 js 文件都下载完成后，才开始进行页面的渲染，文件下载等需要一定的时间等，所以首屏渲染需要一定的时间
+
+- ssr渲染的缺点：
+    - 更多的开发条件限制：例如服务端渲染只支持 beforCreate 和 created 两个钩子函数，这会导致一些外部扩展库需要特殊处理，才能在服务端渲染应用程序中运行；并且与可以部署在任何静态文件服务器上的完全静态单页面应用程序 SPA 不同，服务端渲染应用程序，需要处于 Node.js server 运行环境；
+    - 更多的服务器负载：在 Node.js中渲染完整的应用程序，显然会比仅仅提供静态文件的  server 更加大量占用CPU 资源 (CPU-intensive - CPU 密集)，因此如果你预料在高流量环境 ( high traffic ) 下使用，请准备相应的服务器负载，并明智地采用缓存策略
+
+## 能说下vue-router中常用的hash和history路由模式实现原理吗
+
+### hash模式的实现原理
+
+原理很简单，location.hash 的值就是 URL 中 # 后面的内容
+
+- URL 中 hash 值只是客户端的一种状态，也就是说当向服务器端发出请求时，hash 部分不会被发送；
+- hash 值的改变，都会在浏览器的访问历史中增加一个记录。因此我们能通过浏览器的回退、前进按钮控制hash 的切换；
+- 可以通过 a 标签，并设置 href 属性，当用户点击这个标签后，URL 的 hash 值会发生改变；或者使用  JavaScript 来对 loaction.hash 进行赋值，改变 URL 的 hash 值；
+- 可以使用 hashchange 事件来监听 hash 值的变化，从而对页面进行跳转（渲染）
+
+### history模式的实现原理
+
+> HTML5 提供了 History API 来实现 URL 的变化。其中做最主要的 API 有以下两个：history.pushState() 和 history.repalceState()。这两个 API 可以在不进行刷新的情况下，操作浏览器的历史纪录。唯一不同的是，前者是新增一个历史记录，后者是直接替换当前的历史记录，如下所示：
+- pushState 和 repalceState 两个 API 来操作实现 URL 的变化 ；
+- 我们可以使用 popstate  事件来监听 url 的变化，从而对页面进行跳转（渲染）；
+- history.pushState() 或 history.replaceState() 不会触发 popstate 事件，这时我们需要手动触发页面跳转（渲染）
+
 ## vue中key的作用
 
 ## vue通过数据劫持可以精准探测数据变化,为什么还需要虚拟dom进行diff检测差异
@@ -148,7 +275,7 @@ pull: 其代表为React,我们可以回忆一下React是如何侦测到变化的
 
 push: Vue的响应式系统则是push的代表,当Vue程序初始化的时候就会对数据data进行依赖的收集,一但数据发生变化,响应式系统就会立刻得知,因此Vue是一开始就知道是「在哪发生变化了」,但是这又会产生一个问题,如果你熟悉Vue的响应式系统就知道,通常一个绑定一个数据就需要一个Watcher,一但我们的绑定细粒度过高就会产生大量的Watcher,这会带来内存以及依赖追踪的开销,而细粒度过低会无法精准侦测变化,因此Vue的设计是选择中等细粒度的方案,在组件级别进行push侦测的方式,也就是那套响应式系统,通常我们会第一时间侦测到发生变化的组件,然后在组件内部进行Virtual Dom Diff获取更加具体的差异,而Virtual Dom Diff则是pull操作,Vue是push+pull结合的方式进行变化侦测的
 
-## 如何理解Virtual Dom
+## 如何理解virtualdom
 实现原理：
 - 用 JavaScript 对象模拟真实 DOM 树，对真实 DOM 进行抽象；
 - diff 算法 — 比较两棵虚拟 DOM 树的差异；
@@ -162,10 +289,12 @@ push: Vue的响应式系统则是push的代表,当Vue程序初始化的时候就
 缺点:
 无法进行极致优化： 虽然虚拟 DOM + 合理的优化，足以应对绝大部分应用的性能需求，但在一些性能要求极高的应用中虚拟 DOM 无法进行针对性的极致优化。
 
-## 有写过什么组件，如何做的？设计一个组件的原则
-## 项目如何选择框架 vue/react
+## 项目如何选择框架vue/react
+
 ## [vue性能优化](https://github.com/Coffcer/Blog/issues/3)
+
 [参考链接](https://juejin.im/post/5d59f2a451882549be53b170#heading-7)
-## 如何解决vue渲染白屏问题
-## vue ssr
+
 ## 高阶组件封装，HOC
+
+## 有写过什么组件，如何做的？设计一个组件的原则

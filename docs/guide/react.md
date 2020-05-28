@@ -70,3 +70,7 @@
 **React.PureComponent** 与 **React.Component** 几乎完全相同，但 **React.PureComponent** 通过props和state的浅对比来实现 **shouldComponentUpate()**。如果对象包含复杂的数据结构，它可能会因深层的数据不一致而产生错误的否定判断(表现为对象深层的数据已改变视图却没有更新）
 
 [面试题目](https://juejin.im/post/5cf0733de51d4510803ce34e)
+
+## [react ssr (Server Side Rendering)](https://juejin.im/post/5def0816f265da33aa6aa7fe)
+
+https://juejin.im/post/5c7656b2f265da2dc13c9148
