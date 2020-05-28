@@ -1,6 +1,11 @@
-## ES6相关
+# ES6
+
+* [babel](#babel)
+* [async](#async)
+* [class](#class)
+
 ECMAScript 6.0
-ECMAScript 和 JavaScript 的关系是，前者是后者的规格，后者是前者的一种实现
+ECMAScript 和 JavaScript 的关系是，前者是后者的规范，后者是前者的一种实现
 ## babel
 - .babelrc
   - presents转码规则例如：**@babel/preset-env || @babel/preset-react**
@@ -12,13 +17,10 @@ async函数就是将 Generator 函数的星号（*）替换成async，将yield�
 
 #### async基本用法
 > async函数返回一个 Promise 对象，可以使用then方法添加回调函数。当函数执行的时候，一旦遇到await就会先返回，等到异步操作完成，再接着执行函数体内后面的语句。
-
 - async函数返回一个 Promise 对象。
 - async函数内部return语句返回的值，会成为then方法回调函数的参数。
 - async函数返回的 Promise 对象，必须等到内部所有await命令后面的 Promise 对象执行完，才会发生状态改变，除非遇到return语句或者抛出错误。也就是说，只有async函数内部的异步操作执行完，才会执行then方法指定的回调函数
 #### await
-
-
 
 ## class:
 - 类的所有方法都在类的prototype上。类的实例调用方法就是调用原型上面的方法
