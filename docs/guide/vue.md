@@ -3,6 +3,8 @@
 - [VUE](#vue)
   - [mvvm](#mvvm)
     - [mvvm的优缺点](#mvvm的优缺点)
+    - [vue是如何实现数据双向绑定的](#vue是如何实现数据双向绑定的)
+    - [vue框架怎么实现对象和数组的监听](#vue框架怎么实现对象和数组的监听)
   - [对vue的生命周期理解，请求一般放在哪个生命周期](#对vue的生命周期理解请求一般放在哪个生命周期)
     - [在哪个生命周期内调用异步请求](#在哪个生命周期内调用异步请求)
     - [在什么阶段才能访问操作DOM](#在什么阶段才能访问操作dom)
@@ -13,20 +15,20 @@
   - [vue如何实现双向绑定](#vue如何实现双向绑定)
   - [观察者和发布者订阅模式以及区别](#观察者和发布者订阅模式以及区别)
   - [vue3跟vue2的区别](#vue3跟vue2的区别)
-    - [proxy与object.definedproperty的优点](#proxy与objectdefinedproperty的优点)
+    - [proxy与objectdefinedproperty的优点](#proxy与objectdefinedproperty的优点)
   - [vue组件间通信有哪几种方式](#vue组件间通信有哪几种方式)
     - [vuex是做什么的主要解决什么问题，里面的各个文件是如何分工的](#vuex是做什么的主要解决什么问题里面的各个文件是如何分工的)
   - [如何解决vue渲染白屏问题](#如何解决vue渲染白屏问题)
-    - [使用过VueSSR吗,说说SSR](#使用过vuessr吗说说ssr)
+    - [使用过vuessr吗说说ssr](#使用过vuessr吗说说ssr)
   - [能说下vue-router中常用的hash和history路由模式实现原理吗](#能说下vue-router中常用的hash和history路由模式实现原理吗)
     - [hash模式的实现原理](#hash模式的实现原理)
     - [history模式的实现原理](#history模式的实现原理)
   - [vue中key的作用](#vue中key的作用)
   - [vue通过数据劫持可以精准探测数据变化,为什么还需要虚拟dom进行diff检测差异](#vue通过数据劫持可以精准探测数据变化为什么还需要虚拟dom进行diff检测差异)
   - [如何理解virtualdom](#如何理解virtualdom)
-  - [项目如何选择框架vue/react](#项目如何选择框架vuereact)
   - [vue性能优化](#vue性能优化)
   - [高阶组件封装，HOC](#高阶组件封装hoc)
+  - [项目如何选择框架vue/react](#项目如何选择框架vuereact)
   - [有写过什么组件，如何做的？设计一个组件的原则](#有写过什么组件如何做的设计一个组件的原则)
 
 ## mvvm
@@ -54,6 +56,29 @@ ViewModel 层:把 View 需要的层数据暴露，并对 View 层的 数据绑�
 - Bug很难被调试: 因为使用双向绑定的模式，当你看到界面异常了，有可能是你View的代码有Bug，也可能是Model的代码有问题。数据绑定使得一个位置的Bug被快速传递到别的位置，要定位原始出问题的地方就变得不那么容易了。另外，数据绑定的声明是指令式地写在View的模版当中的，这些内容是没办法去打断点debug的
 - 一个大的模块中model也会很大，虽然使用方便了也很容易保证了数据的一致性，当时长期持有，不释放内存就造成了花费更多的内存
 - 对于大型的图形应用程序，视图状态较多，ViewModel的构建和维护的成本都会比较高
+  
+### [vue是如何实现数据双向绑定的](https://juejin.im/post/5d421bcf6fb9a06af23853f1)
+
+### vue框架怎么实现对象和数组的监听
+
+> Vue 怎么实现数据双向绑定，大家肯定都会回答 通过 Object.defineProperty() 对数据进行劫持，但是  Object.defineProperty() 只能对属性进行数据劫持，不能对整个对象进行劫持，同理无法对数组进行劫持，但是我们在使用 Vue 框架中都知道，Vue 能检测到对象和数组（部分方法的操作）的变化，那它是怎么实现的呢？我们查看相关代码如下
+
+```js
+ /**
+   * Observe a list of Array items.
+   */
+  observeArray (items: Array<any>) {
+    for (let i = 0, l = items.length; i < l; i++) {
+      observe(items[i])  // observe 功能为监测数据的变化
+    }
+  }
+
+  /**
+   * 对属性进行递归遍历
+   */
+  let childOb = !shallow && observe(val) // observe 功能为监测数据的变化
+```
+通过以上 Vue 源码部分查看，我们就能知道 Vue 框架是通过遍历数组 和递归遍历对象，从而达到利用 Object.defineProperty() 也能对对象和数组（部分方法的操作）进行监听
 
 ## 对vue的生命周期理解，请求一般放在哪个生命周期
 
@@ -204,14 +229,18 @@ watch:
 
 ## vue3跟vue2的区别
 
-### proxy与object.definedproperty的优点
+### proxy与objectdefinedproperty的优点
+
 Proxy的优势如下:
+
 - Proxy可以直接监听对象而非属性
 - Proxy可以直接监听数组的变化
 - Proxy有多达13种拦截方法,不限于apply、ownKeys、deleteProperty、has等等是Object.defineProperty不具备的
 - Proxy返回的是一个新对象,我们可以只操作新的对象达到目的,而Object.defineProperty只能遍历对象属性直接修改
 - Proxy作为新标准将受到浏览器厂商重点持续的性能优化，也就是传说中的新标准的性能红利
+
 Object.defineProperty的优势如下:
+
 - 兼容性好,支持IE9
 
 ## vue组件间通信有哪几种方式
@@ -236,7 +265,7 @@ Vuex 是一个专为 Vue.js 应用程序开发的状态管理模式。每一个 
 ## 如何解决vue渲染白屏问题
 [参考文章](https://juejin.im/post/5bcc169ae51d450e85308d86)
 
-### [使用过VueSSR吗,说说SSR](https://juejin.im/post/5cb6c36e6fb9a068af37aa35)
+### [使用过vuessr吗说说ssr](https://juejin.im/post/5cb6c36e6fb9a068af37aa35)
 > Vue.js 是构建客户端应用程序的框架。默认情况下，可以在浏览器中输出 Vue 组件，进行生成 DOM 和操作 DOM。然而，也可以将同一个组件渲染为服务端的 HTML 字符串，将它们直接发送到浏览器，最后将这些静态标记"激活"为客户端上完全可交互的应用程序。
 即：SSR大致的意思就是vue在客户端将标签渲染成的整个 html 片段的工作在服务端完成，服务端形成的html 片段直接返回给客户端这个过程就叫做服务端渲染。
 
@@ -276,7 +305,7 @@ pull: 其代表为React,我们可以回忆一下React是如何侦测到变化的
 push: Vue的响应式系统则是push的代表,当Vue程序初始化的时候就会对数据data进行依赖的收集,一但数据发生变化,响应式系统就会立刻得知,因此Vue是一开始就知道是「在哪发生变化了」,但是这又会产生一个问题,如果你熟悉Vue的响应式系统就知道,通常一个绑定一个数据就需要一个Watcher,一但我们的绑定细粒度过高就会产生大量的Watcher,这会带来内存以及依赖追踪的开销,而细粒度过低会无法精准侦测变化,因此Vue的设计是选择中等细粒度的方案,在组件级别进行push侦测的方式,也就是那套响应式系统,通常我们会第一时间侦测到发生变化的组件,然后在组件内部进行Virtual Dom Diff获取更加具体的差异,而Virtual Dom Diff则是pull操作,Vue是push+pull结合的方式进行变化侦测的
 
 ## 如何理解virtualdom
-实现原理：
+[实现原理](https://juejin.im/post/5d36cc575188257aea108a74#heading-14)
 - 用 JavaScript 对象模拟真实 DOM 树，对真实 DOM 进行抽象；
 - diff 算法 — 比较两棵虚拟 DOM 树的差异；
 - pach 算法 — 将两个虚拟 DOM 对象的差异应用到真正的 DOM 树。
@@ -289,12 +318,13 @@ push: Vue的响应式系统则是push的代表,当Vue程序初始化的时候就
 缺点:
 无法进行极致优化： 虽然虚拟 DOM + 合理的优化，足以应对绝大部分应用的性能需求，但在一些性能要求极高的应用中虚拟 DOM 无法进行针对性的极致优化。
 
-## 项目如何选择框架vue/react
-
 ## [vue性能优化](https://github.com/Coffcer/Blog/issues/3)
 
-[参考链接](https://juejin.im/post/5d59f2a451882549be53b170#heading-7)
+[参考文章](https://juejin.im/post/5d548b83f265da03ab42471d)
 
 ## 高阶组件封装，HOC
 
+## 项目如何选择框架vue/react
+
 ## 有写过什么组件，如何做的？设计一个组件的原则
+[参考链接](https://juejin.im/post/5d59f2a451882549be53b170#heading-7)

@@ -1,4 +1,18 @@
 # HTTP缓存
+- [HTTP缓存](#http缓存)
+  - [背景](#背景)
+  - [http缓存机制](#http缓存机制)
+    - [强制缓存](#强制缓存)
+      - [Expires](#expires)
+      - [Cache-Control](#cache-control)
+    - [协商缓存](#协商缓存)
+      - [Last-Modified](#last-modified)
+      - [if-Modified-Since:](#if-modified-since)
+      - [Etag](#etag)
+      - [If-None-Match](#if-none-match)
+    - [缓存的优点](#缓存的优点)
+    - [不同刷新的请求执行过程](#不同刷新的请求执行过程)
+  - [浏览器缓存技术](#浏览器缓存技术)
 
 ## 背景
 HTTP的缓存属于客户端缓存，后面会提到为什么属于客户端缓存。所以我们认为浏览器存在一个缓存数据库，用于储存一些不经常变化的静态文件（图片、css、js等）。我们将缓存分为强制缓存和协商缓存
