@@ -20,6 +20,7 @@
   - [前端如何实现即时通讯](#前端如何实现即时通讯)
   - [如何判断页面白屏如果出现白屏怎么排查](#如何判断页面白屏如果出现白屏怎么排查)
   - [v8引擎](#v8引擎)
+  - [浏览器不同tab之间如何通信](#浏览器不同tab之间如何通信)
 
 ## 一个页面从输入url到显示经历了什么
 
@@ -171,3 +172,6 @@ getClientWidth、getClientHeight会不会引起？会
 ## [如何判断页面白屏如果出现白屏怎么排查](https://mp.weixin.qq.com/s/YiKRY_LDURY0uONtEhkUfg)
 
 ## v8引擎
+
+## [浏览器不同tab之间如何通信](https://segmentfault.com/a/1190000011207317)
+https://juejin.im/post/5acdba01f265da23826e5633
