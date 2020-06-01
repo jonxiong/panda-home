@@ -13,9 +13,14 @@ ECMAScript 和 JavaScript 的关系是，前者是后者的规范，后者是前
 
 ## babel
 
+babel的编译过程分为3步，解析（parse），转换（transform），生成（generate）
+babylon将源码转换为抽象语法树（AST）；babel-traverse通过AST生成一个便于操作、转换的path对象，供我们的babel插件处理；babel-generator读取AST并将其转换为代码和源码映射
+
 * .babelrc
   + presents转码规则例如：**@babel/preset-env || @babel/preset-react**
   + plugins插件
+    + @babel/plugin-transform-runtime:一个插件，通过重复使用babel注入的助手（helper）代码，来减少代码体积
+    + 
 
 ## async
 

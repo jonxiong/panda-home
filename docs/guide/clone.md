@@ -1,14 +1,42 @@
 # 浅克隆与深克隆
 
 - [浅克隆与深克隆](#浅克隆与深克隆)
+  - [数据类型](#数据类型)
+  - [浅拷贝与深拷贝](#浅拷贝与深拷贝)
+  - [浅拷贝与赋值的区别](#浅拷贝与赋值的区别)
   - [浅克隆](#浅克隆)
+    - [Array.prototype.concat()](#arrayprototypeconcat)
+    - [Array.prototype.slice()](#arrayprototypeslice)
+    - [Object.assign()](#objectassign)
   - [深克隆](#深克隆)
     - [JSON.pares方法](#jsonpares方法)
     - [构造一个深clone函数](#构造一个深clone函数)
+    - [函数库lodash](#函数库lodash)
+
+## 数据类型
+
+- 基本数据类型的特点：直接存储在栈(stack)中的数据
+- 引用数据类型的特点：存储的是该对象在栈中引用，真实的数据存放在堆内存里
+
+## 浅拷贝与深拷贝
+
+> 深拷贝和浅拷贝是只针对Object和Array这样的引用数据类型的
+> 浅拷贝只复制指向某个对象的指针，而不复制对象本身，新旧对象还是共享同一块内存。但深拷贝会另外创造一个一模一样的对象，新对象跟原对象不共享内存，修改新对象不会改到原对
+
+## 浅拷贝与赋值的区别
+
+![0](https://user-gold-cdn.xitu.io/2018/12/23/167da74d45d3103b?imageView2/0/w/1280/h/960/format/webp/ignore-error/1)
+
 
 ## 浅克隆
 
 浅克隆只是clone了对象的最外面一层，至于更深层的对象，依然是通过引用指向同一块堆内存
+
+### Array.prototype.concat()
+
+### Array.prototype.slice()
+
+### Object.assign()
 
 ``` js
 function shallowClone(o) {
@@ -33,7 +61,6 @@ const newobj = shallowClone(oldObj);
 console.log(newobj.c.h, oldObj.c.h);
 console.log(newobj.c.h === oldObj.c.h) //可以看出他们指向同一段堆内存
 
-Object.assign() 也可以实现浅复制
 ```
 
 我们可以看到, 很明显虽然 `oldObj.c.h` 被克隆了, 但是它还与 `oldObj.c.h` 相等, 这表明他们依然指向同一段堆内存, 这就造成了如果对 `newObj.c.h` 进行修改, 也会影响 `oldObj.c.h` , 这就不是一版好的克隆.
@@ -157,7 +184,7 @@ const clone = parent => {
 
         for (let i in parent) {
             // 递归
-            child[i] = _clone(parent[i]);
+            child[i] = w(parent[i]);
         }
 
         return child;
@@ -167,3 +194,18 @@ const clone = parent => {
 ```
 
 当然, 我们这个深克隆还不算完美, 例如Buffer对象、Promise、Set、Map可能都需要我们做特殊处理，另外对于确保没有循环引用的对象，我们可以省去对循环引用的特殊处理，因为这很消耗时间，不过一个基本的深克隆函数我们已经实现了
+
+### 函数库lodash
+
+```js
+var _ = require('lodash');
+var obj1 = {
+    a: 1,
+    b: { f: { g: 1 } },
+    c: [1, 2, 3]
+};
+var obj2 = _.cloneDeep(obj1);
+console.log(obj1.b.f === obj2.b.f);
+```
+
+[参考文章](https://juejin.im/post/5b5dcf8351882519790c9a2e)
