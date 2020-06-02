@@ -42,7 +42,7 @@ module.exports = {
             {
               title: '设计模式',
               children: [
-                '../guide/designPatterns',
+                '../guide/desPatterns',
               ]
             },
             {
@@ -64,7 +64,7 @@ module.exports = {
               title: '框架实站技巧',
               children: [
                 '../guide/buildProject',
-                '../guide/componentDesign',
+                '../guide/comDesign',
               ]
             },
             {
@@ -98,7 +98,7 @@ module.exports = {
             {
               title: '面试',
               children: [
-                '../guide/interviewQuestions',
+                '../guide/intQue',
                 '../guide/interviewResume',
                 '../guide/demo',
                 '../guide/demoans',

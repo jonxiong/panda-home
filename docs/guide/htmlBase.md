@@ -115,7 +115,8 @@ meta标签由name和content两个属性来定义，来描述一个HTML网页文�
 例如当我们写：
 
 ``` js
-< link href = "style.css" rel = "stylesheet" / >
+< link href = "style.css"
+rel = "stylesheet" / >
 ```
 
 浏览器知道这是个样式表文件，html的解析和渲染不会暂停，css文件的加载是同时进行的，这不同于在style标签里面的内置样式，用@import添加的样式是在页面载入之后再加载，这可能会导致页面因重新渲染而闪烁。所以我们建议使用link而不是@import
@@ -158,6 +159,13 @@ iframe就是我们常用的iframe标签, iframe标签是框架的一种形式，
 [iframe如何跨域通信](https://juejin.im/post/5e9045316fb9a03c957ff7ff)
 
 * postMessage
+
+优点：
+
+* iframe能够原封不动地把嵌入的网页展现出来。
+* 如果有多个网页调用iframe，只需要修改iframe的内容，就可以实现对调用iframe的每一个页面内容的更改，方便快捷。
+* 网页如果为了统一风格，头部和版本都是一样的，就可以写成一个页面，用iframe来嵌套，可以增加代码的可重用性。
+* 如果遇到加载缓慢的第三方内容，如图标和广告等，可以用iframe来解决
 
 缺点：
 iframe会阻塞主页面的Onload事件

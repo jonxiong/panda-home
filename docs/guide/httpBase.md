@@ -2,6 +2,9 @@
 
 - [HTTP基础](#http基础)
   - [http原理](#http原理)
+  - [http三次握手四次挥手](#http三次握手四次挥手)
+    - [三次握手](#三次握手)
+    - [四次挥手](#四次挥手)
   - [http有哪些方法](#http有哪些方法)
   - [这些方法的具体作用是什么](#这些方法的具体作用是什么)
   - [get和post有什么区别](#get和post有什么区别)
@@ -18,15 +21,19 @@
       - [http请求](#http请求)
       - [应用场景](#应用场景)
   - [如何跨域共享cookie, 如何使脚本不能访问cookie](#如何跨域共享cookie-如何使脚本不能访问cookie)
+  - [localstorage跨域共享, localstorage超过5m如何处理](#localstorage跨域共享-localstorage超过5m如何处理)
   - [xss和csrf攻击以及防御](#xss和csrf攻击以及防御)
     - [XSS(Cross Site Scripting)](#xsscross-site-scripting)
     - [CSRF(Cross-site request forgery)](#csrfcross-site-request-forgery)
   - [http常用状态码都有哪些, 301和302的区别](#http常用状态码都有哪些-301和302的区别)
   - [谈谈https的加密原理](#谈谈https的加密原理)
+  - [如果要将http站迁移到https怎么做迁移](#如果要将http站迁移到https怎么做迁移)
+    - [https与http的默认端口号](#https与http的默认端口号)
   - [什么是跨域，解决跨域的方法及原理是什么](#什么是跨域解决跨域的方法及原理是什么)
     - [jsonp](#jsonp)
     - [cors](#cors)
   - [fetch和axios和ajax之间的差异](#fetch和axios和ajax之间的差异)
+  - [如何让每次请求都请求新的资源](#如何让每次请求都请求新的资源)
 
 ## http原理
 
@@ -38,6 +45,49 @@ http（超文本传输协议）是一个基于请求与响应模式的、无状�
 * 3. 灵活：HTTP允许传输任意类型的数据对象。正在传输的类型由Content-Type加以标记。
 * 4. 无连接：无连接的含义是限制每次连接只处理一个请求。服务器处理完客户的请求，并收到客户的应答后，即断开连接。采用这种方式可以节省传输时间。
 * 5. 无状态：HTTP协议是无状态协议。无状态是指协议对于事务处理没有记忆能力。缺少状态意味着如果后续处理需要前面的信息，则它必须重传，这样可能导致每次连接传送的数据量增大。另一方面，在服务器不需要先前信息时它的应答就较快。
+
+## http三次握手四次挥手
+
+HTTP与TCP区别和联系：
+TCP对应传输层，HTTP对应应用层，从本质上来说，两者没有可比性；
+
+HTTP协议即超文本传送协议(Hypertext Transfer Protocol )，是Web联网的基础，也是手机联网常用的协议之一，HTTP协议是建立在TCP协议之上的一种应用。
+
+Http协议是建立在TCP协议基础之上的，当浏览器需要从服务器获取网页数据的时候，会发出一次Http请求。Http会通过TCP建立起一个到服务器的连接通道，当本次请求需要的数据完毕后，Http会立即将TCP连接断开，这个过程是很短的。所以Http连接是一种短连接，是一种无状态的连接。
+
+* TCP是底层协议，定义的是数据传输和连接方式的规范。
+* HTTP是应用层协议，定义的是传输数据的内容的规范。
+
+所以三次握手和四次挥手是针对TCP连接的
+
+### 三次握手
+
+所谓三次握手(Three-way Handshake)，是指建立一个 TCP 连接时，需要客户端和服务器总共发送3个包。
+三次握手的目的是连接服务器指定端口，建立 TCP 连接，并同步连接双方的序列号和确认号，交换 TCP 窗口大小信息。在 socket 编程中，客户端执行 connect() 时。将触发三次握手
+
+* 第一次握手(SYN=1, seq=x):
+
+客户端发送一个 TCP 的 SYN 标志位置1的包，指明客户端打算连接的服务器的端口，以及初始序号 X, 保存在包头的序列号(Sequence Number)字段里。
+发送完毕后，客户端进入 SYN_SEND 状态。
+
+* 第二次握手(SYN=1, ACK=1, seq=y, ACKnum=x+1):
+
+服务器发回确认包(ACK)应答。即 SYN 标志位和 ACK 标志位均为1。服务器端选择自己 ISN 序列号，放到 Seq 域里，同时将确认序号(Acknowledgement Number)设置为客户的 ISN 加1，即X+1。 发送完毕后，服务器端进入 SYN_RCVD 状态。
+
+* 第三次握手(ACK=1，ACKnum=y+1)
+
+客户端再次发送确认包(ACK)，SYN 标志位为0，ACK 标志位为1，并且把服务器发来 ACK 的序号字段+1，放在确定字段中发送给对方，并且在数据段放写ISN的+1
+发送完毕后，客户端进入 ESTABLISHED 状态，当服务器端接收到这个包时，也进入 ESTABLISHED 状态，TCP 握手结束。
+
+### 四次挥手
+
+TCP 的连接的拆除需要发送四个包，因此称为四次挥手(Four-way handshake)，也叫做改进的三次握手。客户端或服务器均可主动发起挥手动作，在 socket 编程中，任何一方执行 close() 操作即可产生挥手操作。
+简化说：
+
+* 第一次挥手：clientToServer（C: 发送FIN，我没有数据给你了）
+* 第二次挥手：serverToClient（S: 好的我知道要关闭请求了，我准备关闭连接）
+* 第三次挥手：serverToClient（S: 我再没有数据给你了，我准备好关系连接了）
+* 第四次挥手：clientToServer（C: 好的收完了，你可以关闭我们之间的数据传输通道了，S收到确认信息，关闭连接）
 
 ## http有哪些方法
 
@@ -171,6 +221,8 @@ cookies、localstorage、sessionstorage、Web SQL、IndexedDB
 * setDomain
 * HttpOnly
 
+## localstorage跨域共享, localstorage超过5m如何处理
+
 ## [xss和csrf攻击以及防御](https://juejin.im/entry/5b4b56fd5188251b1a7b2ac1)
 
 ### XSS(Cross Site Scripting)
@@ -211,6 +263,22 @@ HTTP = HTTP + SSL
 * 2. 服务端：产生公钥和解公钥钥匙，返回公钥（证书）给客户端
 * 3. 客户端：产生随机（对称密钥），使用公钥对对称密钥加密，发送加密后的对称密钥
 * 4. 服务端：用公钥钥匙揭秘获得对称密钥，通过对称密钥加密的密文通信
+  
+## 如果要将http站迁移到https怎么做迁移
+
+为什么要升级成https：
+
+升级到HTTPS是改善网站和最终业务性能的好方法。
+经过测试，运行在HTTPS上的网站的性能要优于HTTP上的网站。原因：数据安全性，更好的技术支持和更好的SEO。
+
+1. 首先要申请SSL证书，然后将SSL证书安装到服务器端
+2. 整改网站链接：SSL证书安装成功后，你的服务器就支持https了。这时我们要把自己网站上的全部链接修改成https的形式
+3. 运行301重定向： 301重定向将90-99％的排名能力转移到重定向的页面。他们将您的站点平稳地移至HTTPS，从而保持SEO完整性。因此，请在服务器级别运行它们
+
+### https与http的默认端口号
+
+* HTTP服务器，默认端口号为80/tcp（木马Executor开放此端口）
+* HTTPS（securely transferring web pages）服务器，默认端口号为443/tcp  443/udp
 
 ## 什么是跨域，解决跨域的方法及原理是什么
 
@@ -289,3 +357,7 @@ axios:
 
 [参考](http://axios-js.com/zh-cn/axios-ajax-fetch-compare.html)
 [参考](https://segmentfault.com/a/1190000012836882)
+
+## 如何让每次请求都请求新的资源
+
+

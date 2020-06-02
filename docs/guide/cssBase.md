@@ -10,8 +10,9 @@
   - [css有哪些方式可以隐藏页面元素](#css有哪些方式可以隐藏页面元素)
     - [【追问】**opacity:0**和**visibility:hidden**都可以隐藏页面元素，它们的区别？](#追问opacity0和visibilityhidden都可以隐藏页面元素它们的区别)
   - [em和px和rem区别](#em和px和rem区别)
+    - [用rem的坏处](#用rem的坏处)
   - [什么是viewport](#什么是viewport)
-    - [通过viewport我们可以做什么,在项目中如何做的适配](#通过viewport我们可以做什么在项目中如何做的适配)
+    - [通过viewport我们可以做什么, 在项目中如何做的适配](#通过viewport我们可以做什么-在项目中如何做的适配)
   - [移动端适配1px的问题（考察dpr）](#移动端适配1px的问题考察dpr)
     - [物理像素(physical pixel/`piksl/)](#物理像素physical-pixelpiksl)
     - [设备独立像素(density-independent pixel)](#设备独立像素density-independent-pixel)
@@ -121,6 +122,8 @@ CSS选择器：
 * **rem**：相对单位，可理解为”root em”, 相对根节点html的字体大小来计算，CSS3新加属性，
 * **vw/vh**：视口（viewport units）单位，何谓视口，就是根据你浏览器窗口的大小的单位，不受显示器分辨率的影响
 
+### 用rem的坏处
+
 ## [什么是viewport](https://juejin.im/post/5d736747e51d4561ff66688c)
 
 > 指浏览器的窗口，即浏览器上用来显示网页的那部分区域，是用户网页的可视区域
@@ -132,11 +135,12 @@ content = "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalab
 
 [参考文章](https://www.jianshu.com/p/5f7d2c89ae7b)（讲的很深 够看一段时间）
 
-### 通过viewport我们可以做什么,在项目中如何做的适配
+### 通过viewport我们可以做什么, 在项目中如何做的适配
 
 ## 移动端适配1px的问题（考察dpr）
 
 ### 物理像素(physical pixel/`piksl/)
+
 一个物理像素是显示器(手机屏幕)上最小的物理显示单元，在操作系统的调度下，每一个设备像素都有自己的颜色值和亮度值。
 
 ### 设备独立像素(density-independent pixel)
