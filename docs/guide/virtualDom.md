@@ -1,4 +1,4 @@
-# [virtualDom](https://juejin.im/post/5d5d32e251882545e41e655d)
+# [VirtualDom](https://juejin.im/post/5d5d32e251882545e41e655d)
 
 > Virtual DOM是对DOM的抽象,本质上是JavaScript对象,这个对象就是更加轻量级的对DOM的描述
 ### 为啥要用VD

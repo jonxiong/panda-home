@@ -1,6 +1,6 @@
-# webpack
+# WEBPACK
 
-- [webpack](#webpack)
+- [WEBPACK](#webpack)
   - [分别介绍bundle，chunk，module是什么](#分别介绍bundlechunkmodule是什么)
   - [webpack配置中需要理解几个核心的概念](#webpack配置中需要理解几个核心的概念)
   - [webpack源码之ast简介](#webpack源码之ast简介)
@@ -80,9 +80,9 @@ plugin：
 
 ## babel-loader的编译原理
 
-- 解析: 将代码(其实就是字符串)转换成 AST( 抽象语法树)
-- 转换: 访问 AST 的节点进行变换操作生成新的 AST
-- 生成: 以新的 AST 为基础生成代码
+- 解析 Parse: 将代码解析生成抽象语法树( 即AST )，即词法分析与语法分析的过程
+- 转换 Transform: 对于 AST 进行变换一系列的操作，babel 接受得到 AST 并通过 babel-traverse 对其进行遍历，在此过程中进行添加、更新及移除等操作
+- 生成 Generate: 将变换后的 AST 再转换为 JS 代码, 使用到的模块是 babel-generator
 
 ## Loader和Plugin的不同
 

@@ -1,15 +1,6 @@
-<!--
- * @Descripttion: 
- * @version: 
- * @Author: xiongyang
- * @Date: 2020-05-27 11:25:45
- * @LastEditors: xiongyang
- * @LastEditTime: 2020-06-02 22:09:41
---> 
+# 调起
 
-# 调起基础
-
-- [调起基础](#调起基础)
+- [调起](#调起)
   - [调起方式](#调起方式)
     - [scheme](#scheme)
     - [ulink](#ulink)

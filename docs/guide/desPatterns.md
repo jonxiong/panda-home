@@ -1,11 +1,3 @@
-<!--
- * @Descripttion: 
- * @version: 
- * @Author: xiongyang
- * @Date: 2020-05-27 11:25:45
- * @LastEditors: xiongyang
- * @LastEditTime: 2020-06-02 21:07:04
---> 
 # 设计模式
 
 - [设计模式](#设计模式)
