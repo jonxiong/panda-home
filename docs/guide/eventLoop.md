@@ -10,6 +10,7 @@
       - [微任务](#微任务)
   - [浏览器中的Event loop](#浏览器中的event-loop)
     - [同步任务和异步任务](#同步任务和异步任务)
+  - [Node中的Event loop](#node中的event-loop)
 
 ## 前言
 
@@ -54,5 +55,12 @@
 2. 此期间WebAPIs完成这个事件，把回调函数放入队列中等待执行（微任务放到微任务队列，宏任务放到宏任务队列）
 3. 执行栈为空时，Event Loop把微任务队列执行清空；
 4. 微任务队列清空后，进入宏任务队列，取队列的第一项任务放入Stack(栈）中执行，回到第1步
+
+## Node中的Event loop
+
+1. V8引擎解析JS
+2. 解析后的代码调用NodeAPI
+3. Libuv负责NodeAPI的执行，将不同任务分配给不同线程，形成EventLoop, 并以异步方式返回给V8引擎
+4. V8引擎将结果返回给用户
 
 [参考文章](https://juejin.im/post/5e0adffbe51d4541013f0bf4)

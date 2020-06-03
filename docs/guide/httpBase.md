@@ -22,9 +22,6 @@
       - [应用场景](#应用场景)
   - [如何跨域共享cookie, 如何使脚本不能访问cookie](#如何跨域共享cookie-如何使脚本不能访问cookie)
   - [localstorage跨域共享, localstorage超过5m如何处理](#localstorage跨域共享-localstorage超过5m如何处理)
-  - [xss和csrf攻击以及防御](#xss和csrf攻击以及防御)
-    - [XSS(Cross Site Scripting)](#xsscross-site-scripting)
-    - [CSRF(Cross-site request forgery)](#csrfcross-site-request-forgery)
   - [http常用状态码都有哪些, 301和302的区别](#http常用状态码都有哪些-301和302的区别)
   - [谈谈https的加密原理](#谈谈https的加密原理)
   - [如果要将http站迁移到https怎么做迁移](#如果要将http站迁移到https怎么做迁移)
@@ -65,16 +62,11 @@ Http协议是建立在TCP协议基础之上的，当浏览器需要从服务器�
 所谓三次握手(Three-way Handshake)，是指建立一个 TCP 连接时，需要客户端和服务器总共发送3个包。
 三次握手的目的是连接服务器指定端口，建立 TCP 连接，并同步连接双方的序列号和确认号，交换 TCP 窗口大小信息。在 socket 编程中，客户端执行 connect() 时。将触发三次握手
 
-* 第一次握手(SYN=1, seq=x):
+1. 第一次握手，client to server【连接请求】- 我要发送数据给你
 
-客户端发送一个 TCP 的 SYN 标志位置1的包，指明客户端打算连接的服务器的端口，以及初始序号 X, 保存在包头的序列号(Sequence Number)字段里。
-发送完毕后，客户端进入 SYN_SEND 状态。
-
-* 第二次握手(SYN=1, ACK=1, seq=y, ACKnum=x+1):
-
-服务器发回确认包(ACK)应答。即 SYN 标志位和 ACK 标志位均为1。服务器端选择自己 ISN 序列号，放到 Seq 域里，同时将确认序号(Acknowledgement Number)设置为客户的 ISN 加1，即X+1。 发送完毕后，服务器端进入 SYN_RCVD 状态。
-
-* 第三次握手(ACK=1，ACKnum=y+1)
+2. 第二次握手，server to client【授予连接】- 我能接受数据，你能接收到我给你的数据吗
+  
+3. 第三次握手，client to server【确认】- 我能接收到你返回的数据，连接ok
 
 客户端再次发送确认包(ACK)，SYN 标志位为0，ACK 标志位为1，并且把服务器发来 ACK 的序号字段+1，放在确定字段中发送给对方，并且在数据段放写ISN的+1
 发送完毕后，客户端进入 ESTABLISHED 状态，当服务器端接收到这个包时，也进入 ESTABLISHED 状态，TCP 握手结束。
@@ -223,32 +215,7 @@ cookies、localstorage、sessionstorage、Web SQL、IndexedDB
 
 ## localstorage跨域共享, localstorage超过5m如何处理
 
-## [xss和csrf攻击以及防御](https://juejin.im/entry/5b4b56fd5188251b1a7b2ac1)
 
-### XSS(Cross Site Scripting)
-
-> 跨站脚本攻击，恶意注入，指攻击者在网站上注入恶意的客户端代码，通过恶意脚本对客户端网页进行篡改，从而在用户浏览网页时，对用户浏览器进行控制或者获取用户隐私数据的一种攻击方式
-
-攻击方式：往Web页面插入恶意的 JavaScript 代码，当用户浏览网页的时候，插入的代码就是被执行，从而达到攻击的目的
-
-``` js
-< script > alert(document.cookie); < /script>
-```
-
-XSS防范:
-
-* 将重要的cookies标记为**HTTP ONLY**，让JavaScript代码无法调用，只有http能调用。或者将重要的信息保存在session里面
-* 控制用户输入的数据类型。比如就只能输入数字和小数点
-* 对数据进行加密处理
-* 过滤或者移除特殊的HTML标签，过滤JavaScript代码等
-
-### CSRF(Cross-site request forgery)
-
-> 跨站请求攻击，冒充用户发起请求，完成违背用户意愿的请求. 其实就是攻击者盗用了受害者的身份，以受害者的名义向网站发送恶意请求
-
-xss偏向方法论，代码实现
-csrf偏向一个攻击结果
-xss是实现csrf诸多路径中的一条
 
 ## http常用状态码都有哪些, 301和302的区别
 
@@ -263,7 +230,7 @@ HTTP = HTTP + SSL
 * 2. 服务端：产生公钥和解公钥钥匙，返回公钥（证书）给客户端
 * 3. 客户端：产生随机（对称密钥），使用公钥对对称密钥加密，发送加密后的对称密钥
 * 4. 服务端：用公钥钥匙揭秘获得对称密钥，通过对称密钥加密的密文通信
-  
+
 ## 如果要将http站迁移到https怎么做迁移
 
 为什么要升级成https：
