@@ -21,7 +21,7 @@
       - [http请求](#http请求)
       - [应用场景](#应用场景)
   - [如何跨域共享cookie, 如何使脚本不能访问cookie](#如何跨域共享cookie-如何使脚本不能访问cookie)
-  - [localstorage跨域共享, localstorage超过5m如何处理](#localstorage跨域共享-localstorage超过5m如何处理)
+  - [localstorage跨域共享, localstorage超过5m如何处理 3](#localstorage跨域共享-localstorage超过5m如何处理-3)
   - [http常用状态码都有哪些, 301和302的区别](#http常用状态码都有哪些-301和302的区别)
   - [谈谈https的加密原理](#谈谈https的加密原理)
   - [如果要将http站迁移到https怎么做迁移](#如果要将http站迁移到https怎么做迁移)
@@ -65,7 +65,9 @@ Http协议是建立在TCP协议基础之上的，当浏览器需要从服务器�
 1. 第一次握手，client to server【连接请求】- 我要发送数据给你
 
 2. 第二次握手，server to client【授予连接】- 我能接受数据，你能接收到我给你的数据吗
+
   
+
 3. 第三次握手，client to server【确认】- 我能接收到你返回的数据，连接ok
 
 客户端再次发送确认包(ACK)，SYN 标志位为0，ACK 标志位为1，并且把服务器发来 ACK 的序号字段+1，放在确定字段中发送给对方，并且在数据段放写ISN的+1
@@ -83,8 +85,8 @@ TCP 的连接的拆除需要发送四个包，因此称为四次挥手(Four-way 
 
 ## http有哪些方法
 
-* HTTP1.0定义了三种请求方法： GET, POST 和 HEAD方法
-* HTTP1.1新增了五种请求方法：OPTIONS, PUT, DELETE, TRACE 和 CONNECT
+* HTTP1. 0定义了三种请求方法： GET, POST 和 HEAD方法
+* HTTP1. 1新增了五种请求方法：OPTIONS, PUT, DELETE, TRACE 和 CONNECT
 
 了解大概有哪些就行
 
@@ -97,7 +99,7 @@ TCP 的连接的拆除需要发送四个包，因此称为四次挥手(Four-way 
 * PUT: 用于新增资源或者使用请求中的有效负载替换目标资源的表现形式
 * DELETE: 用于删除指定的资源
 * PATCH: 用于对资源进行部分修改
-* CONNECT: HTTP/1.1协议中预留给能够将连接改为管道方式的代理服务器
+* CONNECT: HTTP/1. 1协议中预留给能够将连接改为管道方式的代理服务器
 * TRACE: 回显服务器收到的请求，主要用于测试或诊断
 
 ## get和post有什么区别
@@ -125,7 +127,7 @@ TCP 的连接的拆除需要发送四个包，因此称为四次挥手(Four-way 
 
 ![2019-06-14-11-24-10]( https://xiaomuzhu-image.oss-cn-beijing.aliyuncs.com/6bb3600c998901243aa7b3934e5c7ffc.png)
 
-* 请求行包括：请求方法字段、URL字段、HTTP协议版本字段。它们用空格分隔。例如，GET /index.html HTTP/1.1。
+* 请求行包括：请求方法字段、URL字段、HTTP协议版本字段。它们用空格分隔。例如，GET /index. html HTTP/1. 1。
 * 请求头部: 请求头部由关键字/值对组成，每行一对，关键字和值用英文冒号“:”分隔
 
 1. User-Agent：产生请求的浏览器类型。
@@ -206,16 +208,16 @@ cookies、localstorage、sessionstorage、Web SQL、IndexedDB
 > 注意：session 和 sessionStroage 的区别, 顺便说一句，session 也是依赖于cookie实现的
 
 首先要分清的是，cookies，sessionStroage和localStorage是在客户端，session是在服务器端。服务器端的session机制， session 对象数据保存在服务器上。
-实现上，服务器和浏览器之间仅需传递session id即可，服务器根据session id找到对应用户的session对象。会话数据仅在一段时间内有效，这个时间就是server端设置的session有效期。服务器session存储数据安全一些，一般存放用户信息，浏览器只适合存储一般数据.
+实现上，服务器和浏览器之间仅需传递session id即可，服务器根据session id找到对应用户的session对象。会话数据仅在一段时间内有效，这个时间就是server端设置的session有效期。服务器session存储数据安全一些，一般存放用户信息，浏览器只适合存储一般数据. 
 
 ## 如何跨域共享cookie, 如何使脚本不能访问cookie
 
 * setDomain
 * HttpOnly
 
-## localstorage跨域共享, localstorage超过5m如何处理
+## localstorage跨域共享, localstorage超过5m如何处理 3
 
-
+* 超过5m, 我们在localStorage. setItem 用 try catch
 
 ## http常用状态码都有哪些, 301和302的区别
 
@@ -252,7 +254,7 @@ HTTP = HTTP + SSL
 * 1. 不同源就是跨域
 * 2. 同源策略是浏览器的一种安全策略
 * 3. 协议，域名，端口号完全相同就是同源，只要有一处不一样就是跨域
-* 4. 特例： ajax在判断域名的时候只能解析字符串，导致(localhost和127.0.0.1)在它看来也是跨域请求
+* 4. 特例： ajax在判断域名的时候只能解析字符串，导致(localhost和127. 0. 0. 1)在它看来也是跨域请求
 * 5. 解决跨域的方式通常用cors和jsonp
 
 ### jsonp
@@ -307,8 +309,8 @@ jsonp({
 
 * 1. 浏览器端什么也不用干；
 * 2. 服务器端设置响应头：Access-Control-Allow-Origin
-* 3.cors是一门技术，在本质上让ajax引擎允许跨域
-* 4.get和post请求都支持
+* 3. cors是一门技术，在本质上让ajax引擎允许跨域
+* 4. get和post请求都支持
 
 【提问】：为什么cros能解决跨域
 
@@ -318,7 +320,7 @@ fetch:
 号称是ajax的替代品，它的API是基于Promise设计的，旧版本的浏览器不支持Promise，需要使用polyfill es6-promise
 
 axios:
-可以在node.js中使用
+可以在node. js中使用
 提供了并发请求的接口
 支持Promise API
 
@@ -326,5 +328,3 @@ axios:
 [参考](https://segmentfault.com/a/1190000012836882)
 
 ## 如何让每次请求都请求新的资源
-
-

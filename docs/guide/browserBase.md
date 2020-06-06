@@ -1,6 +1,6 @@
-# Browser相关机制
+# Browser基础
 
-- [Browser相关机制](#browser相关机制)
+- [Browser基础](#browser基础)
   - [一个页面从输入url到显示经历了什么](#一个页面从输入url到显示经历了什么)
     - [网络通信](#网络通信)
     - [渲染](#渲染)
@@ -30,6 +30,11 @@
     - [Web Worker](#web-worker)
     - [Service workers](#service-workers)
   - [浏览器不同tab之间如何通信](#浏览器不同tab之间如何通信)
+    - [同源页面减的跨页面通信](#同源页面减的跨页面通信)
+      - [Service Worker](#service-worker)
+      - [LocalStorage](#localstorage)
+    - [非同源页面之间的通信](#非同源页面之间的通信)
+      - [iframe](#iframe)
 
 ## 一个页面从输入url到显示经历了什么
 
@@ -67,7 +72,7 @@
     - 当body中 js 之前的 外链 css 加载完之后，js 之前的 DOM 树和 css 合并渲染树，页面渲染出该 js 之前的 DOM 结构
 5. 文档解析完毕，页面重新渲染。当页面引用的所有 js 同步代码执行完毕，触发 DOMContentLoaded 事件<br/>
 
-6.html 文档中的图片资源，js 代码中有异步加载的 css、js 、图片资源都加载完毕之后，load 事件触发<br/>
+6. html 文档中的图片资源，js 代码中有异步加载的 css、js 、图片资源都加载完毕之后，load 事件触发<br/>
 
 ### DOM构建
 
@@ -230,4 +235,81 @@ comet有两种主要实现手段，一种是基于 AJAX 的长轮询（long-poll
 
 ## [浏览器不同tab之间如何通信](https://segmentfault.com/a/1190000011207317)
 
-https://juejin.im/post/5acdba01f265da23826e5633
+可以从下面几点来区分：
+
+### 同源页面减的跨页面通信
+
+#### Service Worker
+
+> Service Worker 是一个可以长期运行在后台的worker，能够实现与页面的双向通信。多页面共享间的Service worker可以共享，将Service worker作为消息的处理中心（中央站）即可以实现广播效果
+
+> Service Worker是pwa的核心技术之一可以实现离线缓存
+
+#### LocalStorage
+
+> 当 LocalStorage 变化时，会触发storage事件。利用这个特性，我们可以在发送消息时，把消息写入到某个 LocalStorage 中；然后在各个页面内，通过监听storage事件即可收到通知
+
+``` js
+window.addEventListener('storage', function(e) {
+    if (e.key === 'ctc-msg') {
+        const data = JSON.parse(e.newValue);
+        const text = '[receive] ' + data.msg + ' —— tab ' + data.from;
+        console.log('[Storage I] receive message:', text);
+    }
+});
+```
+
+在各个页面添加如上的代码，即可监听到 LocalStorage 的变化。当某个页面需要发送消息时，只需要使用我们熟悉的setItem方法即可
+
+``` js
+mydata.st = +(new Date);
+window.localStorage.setItem('ctc-msg', JSON.stringify(mydata));
+```
+
+> 注意，这里有一个细节：我们在mydata上添加了一个取当前毫秒时间戳的. st属性。这是因为，**storage事件只有在值真正改变时才会触发**
+
+### 非同源页面之间的通信
+
+####  iframe 
+
+> 由于 iframe 与父页面间可以通过指定origin来忽略同源限制，因此可以在每个页面中嵌入一个 iframe, 而这些 iframe 由于使用的是一个 url，因此属于同源页面，其通信方式可以复用上面第一部分提到的各种方式
+
+页面与 iframe 通信非常简单，首先需要在页面中监听 iframe 发来的消息，做相应的业务处理
+
+``` js
+/* 业务页面代码 */
+window.addEventListener('message', function(e) {
+    // …… do something
+});
+```
+
+当页面要与其他的同源或非同源页面通信时，会先给 iframe 发送消息
+
+``` js
+/* 业务页面代码 */
+window.frames[0].window.postMessage(mydata, '*');
+```
+
+其中为了简便此处将postMessage的第二个参数设为了'*'，你也可以设为 iframe 的 URL。iframe 收到消息后，会使用某种跨页面消息通信技术在所有 iframe 间同步消息，例如下面使用的 Broadcast Channel：
+
+``` js
+/* iframe 内代码 */
+const bc = new BroadcastChannel('AlienZHOU');
+// 收到来自页面的消息后，在 iframe 间进行广播
+window.addEventListener('message', function(e) {
+    bc.postMessage(e.data);
+});
+```
+
+其他 iframe 收到通知后，则会将该消息同步给所属的页面：
+
+``` js
+/* iframe 内代码 */
+// 对于收到的（iframe）广播消息，通知给所属的业务页面
+bc.onmessage = function(e) {
+    window.parent.postMessage(e.data, '*');
+};
+```
+
+[参考文章](https://juejin.im/post/5acdba01f265da23826e5633)
+[参考文章](https://juejin.im/post/5ca04406f265da30ac219ccc)

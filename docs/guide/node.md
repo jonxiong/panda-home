@@ -25,9 +25,9 @@
 
 ## 相关背景
 
-> Node.js采用谷歌的V8引擎，是一个服务器端的、非阻塞式I/O的、事件驱动的**JavaScript运行环境**
+> Node. js采用谷歌的V8引擎，是一个服务器端的、非阻塞式I/O的、事件驱动的**JavaScript运行环境**
 
-> 可以说Node.js的诞生很大程度上归功于v8引擎的出现.
+> 可以说Node. js的诞生很大程度上归功于v8引擎的出现. 
 
 我们都知道计算机处理器智能识别机器语言，而JavaScript是一门高级语言，计算机并不能直接读懂。所以我们需要所谓的引擎来将其转化成计算机所能理解的语言。
 v8引擎是由Google推出的，为其浏览器Chrome所设计的开源JavaScript引擎。
@@ -61,15 +61,15 @@ HTTP请求不是持续的连接，你请求一次，服务器响应一次，然�
 
 如果数据库把结果返回来了，loop就把结果传回用户的浏览器，接着继续跑。在这种方式下，你的服务器的进程就不会闲着等着。从而在理论上说，同一时刻的数据库查询数量，以及用户的请求数量就没有限制了。服务器只在用户那边有事件发生的时候才响应，这就是事件驱动。
 
-[Node.js是用来做什么的](https://www.zhihu.com/question/33578075)
+[Node. js是用来做什么的](https://www.zhihu.com/question/33578075)
 
 [理解阻塞非阻塞与同步异步的区别](https://www.zhihu.com/question/19732473/answer/20851256)
 
 ## npm
 
-npm 可以自动管理包的依赖. 只需要安装你想要的包, 不必考虑这个包的依赖包.
+npm 可以自动管理包的依赖. 只需要安装你想要的包, 不必考虑这个包的依赖包. 
 
-Node.js中，对应就是 npm，npm 是 Node.js Package Manager 的意思.
+Node. js中，对应就是 npm，npm 是 Node. js Package Manager 的意思. 
 
 [express](https://www.expressjs.com.cn/)
 
@@ -78,7 +78,7 @@ Node.js中，对应就是 npm，npm 是 Node.js Package Manager 的意思.
 ## node重要对象
 
 * global: 唯一全局对象，对标window环境中的window
-* process: 代表当前Node.js进程
+* process: 代表当前Node. js进程
 
 很多JavaScript代码既能在浏览器中执行，也能在Node环境执行, 如何判断JavaScript执行环境?
 
