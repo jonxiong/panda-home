@@ -34,6 +34,7 @@
   - [css写法注意点](#css写法注意点)
   - [浏览器是怎样解析css选择器的](#浏览器是怎样解析css选择器的)
   - [动画gpu加速](#动画gpu加速)
+    - [requestanimationframe](#requestanimationframe)
   - [垂直居中列举想到的](#垂直居中列举想到的)
 
 ## css基本元素类型
@@ -330,6 +331,8 @@ backface-visibility: hidden;
 【追问】如果需要手动写动画，你认为最小时间间隔是多久，为什么？
 
 > 多数显示器默认频率是60Hz，即1秒刷新60次，所以理论上最小间隔为1/60＊1000ms ＝ 16.7ms。
+
+### requestanimationframe
 
 ## 垂直居中列举想到的
 

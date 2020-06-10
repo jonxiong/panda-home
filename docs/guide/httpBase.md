@@ -20,8 +20,10 @@
       - [存储大小](#存储大小)
       - [http请求](#http请求)
       - [应用场景](#应用场景)
-  - [如何跨域共享cookie, 如何使脚本不能访问cookie](#如何跨域共享cookie-如何使脚本不能访问cookie)
-  - [localstorage跨域共享, localstorage超过5m如何处理 3](#localstorage跨域共享-localstorage超过5m如何处理-3)
+  - [如何跨域共享cookie, localstorage](#如何跨域共享cookie-localstorage)
+    - [cookie的参数都有啥](#cookie的参数都有啥)
+    - [如何使脚本不能访问cookie](#如何使脚本不能访问cookie)
+  - [localstorage超过5m如何处理](#localstorage超过5m如何处理)
   - [http常用状态码都有哪些, 301和302的区别](#http常用状态码都有哪些-301和302的区别)
   - [谈谈https的加密原理](#谈谈https的加密原理)
   - [如果要将http站迁移到https怎么做迁移](#如果要将http站迁移到https怎么做迁移)
@@ -210,19 +212,39 @@ cookies、localstorage、sessionstorage、Web SQL、IndexedDB
 首先要分清的是，cookies，sessionStroage和localStorage是在客户端，session是在服务器端。服务器端的session机制， session 对象数据保存在服务器上。
 实现上，服务器和浏览器之间仅需传递session id即可，服务器根据session id找到对应用户的session对象。会话数据仅在一段时间内有效，这个时间就是server端设置的session有效期。服务器session存储数据安全一些，一般存放用户信息，浏览器只适合存储一般数据. 
 
-## 如何跨域共享cookie, 如何使脚本不能访问cookie
+## [如何跨域共享cookie, localstorage](https://www.haorooms.com/post/kuayu_localstorage_cookie)
 
-* setDomain
-* HttpOnly
+* cookie跨域
 
-## localstorage跨域共享, localstorage超过5m如何处理 3
+path: 表示cookie所在的目录，默认为/，就是根目录。让这个设置的cookie 能被其他目录或者父级的目录访问的方法：
+
+``` js
+document.cookie = "name = value; path=/";
+```
+
+domain: 表示的是cookie所在的域，默认为请求的地址
+为什么www. 百度 和yun.baidu共享cookie，我们只需要设置domain为.baidu.com就可以了
+
+* localstorage
+
+可以使用postMessage和iframe
+
+### cookie的参数都有啥
+
+> name, value, domain, path, expires/max-age, size, httpOnly, secure, sameSite, priority
+
+### 如何使脚本不能访问cookie
+
+* httpOnly
+
+## localstorage超过5m如何处理
 
 * 超过5m, 我们在localStorage. setItem 用 try catch
 
 ## http常用状态码都有哪些, 301和302的区别
 
-301:moved permanently，永久性重定向，表示资源已被分配了新的 URL
-302:found，临时性重定向，表示资源临时被分配了新的 URL
+* 301:moved permanently，永久性重定向，表示资源已被分配了新的 URL
+* 302:found，临时性重定向，表示资源临时被分配了新的 URL
 
 ## 谈谈https的加密原理
 
@@ -314,17 +336,97 @@ jsonp({
 
 【提问】：为什么cros能解决跨域
 
-## [fetch和axios和ajax之间的差异](https://juejin.im/post/5acde23c5188255cb32e7e76)
+## [fetch和axios和ajax之间的差异](https://segmentfault.com/a/1190000012836882)
 
-fetch:
-号称是ajax的替代品，它的API是基于Promise设计的，旧版本的浏览器不支持Promise，需要使用polyfill es6-promise
+* jquery ajax
 
-axios:
-可以在node. js中使用
-提供了并发请求的接口
-支持Promise API
+> 它是对原生XHR的封装，还支持JSONP，非常方便；
+
+``` js
+$.ajax({
+    type: 'POST',
+    url: url,
+    data: data,
+    dataType: dataType,
+    success: function() {},
+    error: function() {}
+})
+```
+
+* axios
+
+> Vue2.0之后，尤雨溪推荐大家用axios替换JQuery ajax，想必让Axios进入了很多人的目光中。Axios本质上也是**对原生XHR的封装**，只不过它是Promise的实现版本，符合最新的ES规范
+
+特点：
+
+  + 可以在node. js中使用
+  + 提供了并发请求的接口
+  + 支持Promise API
+
+``` js
+// demp
+axios({
+        method: 'post',
+        url: '/user/12345',
+        data: {
+            firstName: 'Fred',
+            lastName: 'Flintstone'
+        }
+    })
+    .then(function(response) {
+        console.log(response);
+    })
+    .catch(function(error) {
+        console.log(error);
+    });
+```
 
 [参考](http://axios-js.com/zh-cn/axios-ajax-fetch-compare.html)
 [参考](https://segmentfault.com/a/1190000012836882)
+
+* fetch
+
+号称是ajax的替代品，它的API是基于Promise设计的，旧版本的浏览器不支持Promise，需要使用polyfill es6-promise
+
+主要优势
+
+* 更加底层，提供的API丰富（request, response）
+* **脱离了XHR**，是ES规范里新的实现方式
+
+``` js
+// 原生XHR
+var xhr = new XMLHttpRequest();
+xhr.open('GET', url);
+xhr.onreadystatechange = function() {
+    if (xhr.readyState === 4 && xhr.status === 200) {
+        console.log(xhr.responseText) // 从服务器获取数据
+    }
+}
+xhr.send()
+// fetch
+fetch(url, {
+        method: 'POST',
+        body: Object.keys({
+            name: 'test'
+        }).map((key) => {
+            return encodeURIComponent(key) + '=' + encodeURIComponent(params[key]);
+        }).join('&')
+    })
+    .then(response => {
+        if (response.ok) {
+            return response.json();
+        }
+    })
+    .then(data => console.log(data))
+    .catch(err => console.log(err))
+// fetch + async/await
+async function test() {
+    let response = await fetch(url);
+    let data = await response.json();
+    console.log(data)
+}
+```
+
+> 如果你是直接拉到文章底部的，只需要知道现在无脑使用axios即可，Jquery老迈笨拙，fetch年轻稚嫩，只有Axios正当其年！
 
 ## 如何让每次请求都请求新的资源

@@ -31,6 +31,7 @@ module.exports = {
                 '../guide/eventLoop',
                 '../guide/clone',
                 '../guide/module',
+                '../guide/babel',
               ]
             },
             {
