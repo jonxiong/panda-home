@@ -1,5 +1,17 @@
 # Babel
 
+- [Babel](#babel)
+  - [Babel历史](#babel历史)
+  - [什么是Babel](#什么是babel)
+      - [特性：](#特性)
+  - [Babel的处理步骤](#babel的处理步骤)
+  - [Babel的基本配置](#babel的基本配置)
+    - [plugins 与 presets 同时存在的执行顺序](#plugins-与-presets-同时存在的执行顺序)
+  - [Babel的处理流程](#babel的处理流程)
+    - [1. 代码解析 (Parsing)](#1-代码解析-parsing)
+    - [2. 代码转换（Transform）](#2-代码转换transform)
+    - [3：生成(Generator)](#3生成generator)
+
 ## Babel历史
 
 Babel的原意指得是人类为了见到上帝，准备建造的一座通天塔(babel)，上帝为了阻止人类，让他们语言变的不同。于是，人类开始有了文化差异，从而导致了冲突，塔也就建不起来了……
@@ -8,7 +20,9 @@ Babel的原意指得是人类为了见到上帝，准备建造的一座通天塔
 ## 什么是Babel
 
 > Babel is a JavaScript compiler
+
 ![babel-do](https://pic1.zhimg.com/80/v2-e1ed19f8887bb7dd5125f54924a58044_1440w.jpg)
+
 Babel是一个现代JS编译器, 有很多**优秀的es6, es7新语法**都不能直接在**支持低版本语法的浏览器**中运行, 各浏览器对JS版本的支持各不相同
 为了解决这个“沟通不畅”的问题，所以就有了Babel，Babel的出现使得我们可以无须顾忌的去使用新的的语法.
 
@@ -40,9 +54,11 @@ Babel支持多种的配置方式
 // babel.config.js
 module.exports = function(api) {
     api.cache(true);
-    const presets = [["@babel/preset-env", {
-        "useBuiltIns":"usage" // 检测代码中 ES6/7/8 等的使用情况，仅仅加载代码中用到的 polyfills
-    }]];
+    const presets = [
+        ["@babel/preset-env", {
+            "useBuiltIns": "usage" // 检测代码中 ES6/7/8 等的使用情况，仅仅加载代码中用到的 polyfills
+        }]
+    ];
     const plugins = [
         "@babel/plugin-transform-arrow-functions",
         "@babel/plugin-transform-classes"
@@ -73,11 +89,13 @@ presets
 @babel/preset-typescript
 
 ### plugins 与 presets 同时存在的执行顺序
+
 1. 先执行 plugins 的配置项,再执行 Preset 的配置项；
 2. plugins 配置项，按照声明顺序执行；
 3. Preset 配置项，按照声明逆序执行。
 
 [详细配置](https://zhuanlan.zhihu.com/p/43249121)
+
 ## Babel的处理流程
 
 ### 1. 代码解析 (Parsing)
