@@ -3,7 +3,7 @@
 - [Babel](#babel)
   - [Babel历史](#babel历史)
   - [什么是Babel](#什么是babel)
-      - [特性：](#特性)
+    - [特性](#特性)
   - [Babel的处理步骤](#babel的处理步骤)
   - [Babel的基本配置](#babel的基本配置)
     - [plugins 与 presets 同时存在的执行顺序](#plugins-与-presets-同时存在的执行顺序)
@@ -24,9 +24,9 @@ Babel的原意指得是人类为了见到上帝，准备建造的一座通天塔
 ![babel-do](https://pic1.zhimg.com/80/v2-e1ed19f8887bb7dd5125f54924a58044_1440w.jpg)
 
 Babel是一个现代JS编译器, 有很多**优秀的es6, es7新语法**都不能直接在**支持低版本语法的浏览器**中运行, 各浏览器对JS版本的支持各不相同
-为了解决这个“沟通不畅”的问题，所以就有了Babel，Babel的出现使得我们可以无须顾忌的去使用新的的语法.
+为了解决这个“沟通不畅”的问题，所以就有了Babel，Babel的出现使得我们可以无须顾忌的去使用新的的语法. 
 
-#### 特性：
+### 特性
 
 * Babel可以认识并且更改代码
 * Babel 的功能很纯粹。我们传递一段源代码给 Babel，然后它返回一串新的代码给我们。它不会运行我们的代码，也不会去打包我们的代码
@@ -43,12 +43,12 @@ Babel是一个现代JS编译器, 有很多**优秀的es6, es7新语法**都不�
 
 Babel支持多种的配置方式
 
-* babel.config.js
-* .babelrc
-* .babelrc.js
-* package.json
+* babel. config. js
+* . babelrc
+* . babelrc. js
+* package. json
 
-如果希望以编程的方式创建配置文件, 那么**babel.config.js**可以满足我们的需求
+如果希望以编程的方式创建配置文件, 那么**babel. config. js**可以满足我们的需求
 
 ``` js
 // babel.config.js

@@ -60,11 +60,12 @@ ViewModel 层: 把 View 需要的层数据暴露，并对 View 层的 数据绑�
   
 
 ### [vue是如何实现数据双向绑定的](https://juejin.im/post/5d421bcf6fb9a06af23853f1)
+
 数据劫持+发布订阅模式
 
 ### vue框架怎么实现对象和数组的监听
 
-> Vue 怎么实现数据双向绑定，大家肯定都会回答 通过 Object.defineProperty() 对数据进行劫持，但是  Object.defineProperty() 只能对属性进行数据劫持，不能对整个对象进行劫持，同理无法对数组进行劫持，但是我们在使用 Vue 框架中都知道，Vue 能检测到对象和数组（部分方法的操作）的变化，那它是怎么实现的呢？我们查看相关代码如下
+> Vue 怎么实现数据双向绑定，大家肯定都会回答 通过 Object. defineProperty() 对数据进行劫持，但是  Object. defineProperty() 只能对属性进行数据劫持，不能对整个对象进行劫持，同理无法对数组进行劫持，但是我们在使用 Vue 框架中都知道，Vue 能检测到对象和数组（部分方法的操作）的变化，那它是怎么实现的呢？我们查看相关代码如下
 
 ``` js
  /**
@@ -86,7 +87,7 @@ ViewModel 层: 把 View 需要的层数据暴露，并对 View 层的 数据绑�
  let childOb = !shallow && observe(val) // observe 功能为监测数据的变化
 ```
 
-通过以上 Vue 源码部分查看，我们就能知道 Vue 框架是通过遍历数组 和递归遍历对象，从而达到利用 Object.defineProperty() 也能对对象和数组（部分方法的操作）进行监听
+通过以上 Vue 源码部分查看，我们就能知道 Vue 框架是通过遍历数组 和递归遍历对象，从而达到利用 Object. defineProperty() 也能对对象和数组（部分方法的操作）进行监听
 
 ## 对vue的生命周期理解，请求一般放在哪个生命周期
 
@@ -96,7 +97,7 @@ Vue 实例有一个完整的生命周期，也就是从开始创建、初始化�
 * beforeCreate: 组件实例被创建之初，组件的属性生效之前
 * created: 组件实例已经完全创建，属性也绑定，但真实 dom 还没有生成，$el 还不可用
 * beforeMount: 在挂载开始之前被调用：相关的 render 函数首次被调用
-* mounted:el 被新创建的 vm.$el 替换，并挂载到实例上去之后调用该钩子
+* mounted:el 被新创建的 vm. $el 替换，并挂载到实例上去之后调用该钩子
 * beforeUpdate: 组件数据更新之前调用，发生在虚拟 DOM 打补丁之前
 * update: 组件数据更新之后
 * activited: keep-alive 专属，组件被激活时调用
@@ -209,7 +210,7 @@ methods: {
 
 我们可以将同一函数定义为一个方法而不是一个计算属性。两种方式的最终结果确实是完全相同的。然而，不同的是**计算属性是基于它们的响应式依赖进行缓存的**。只在相关响应式依赖发生改变时它们才会重新求值。这就意味着只要 message 还没有发生改变，多次访问 reversedMessage 计算属性会立即返回之前的计算结果，而不必再次执行函数。
 
-这也同样意味着下面的计算属性将不再更新，因为 Date.now() 不是响应式依赖
+这也同样意味着下面的计算属性将不再更新，因为 Date. now() 不是响应式依赖
 
 ``` js
 computed: {
@@ -227,9 +228,9 @@ computed: {
 
 computed:
 
-* 1.computed是计算属性, 也就是计算值, 它更多用于计算值的场景
-* 2.computed具有缓存性, computed的值在getter执行后是会缓存的，只有在它依赖的属性值改变之后，下一次获取computed的值时才会重新调用对应的getter来计算
-* 3.computed适用于计算比较消耗性能的计算场景
+* 1. computed是计算属性, 也就是计算值, 它更多用于计算值的场景
+* 2. computed具有缓存性, computed的值在getter执行后是会缓存的，只有在它依赖的属性值改变之后，下一次获取computed的值时才会重新调用对应的getter来计算
+* 3. computed适用于计算比较消耗性能的计算场景
 
 watch:
 
@@ -242,7 +243,7 @@ watch:
 
 ## [vue如何实现双向绑定](https://juejin.im/post/5abdd6f6f265da23793c4458)
 
-利用Object.defineProperty劫持对象的访问器, 在属性值发生变化时我们可以获取变化, 然后根据变化进行后续响应, 在vue3.0中通过Proxy代理对象进行类似的操作。
+利用Object. defineProperty劫持对象的访问器, 在属性值发生变化时我们可以获取变化, 然后根据变化进行后续响应, 在vue3. 0中通过Proxy代理对象进行类似的操作。
 
 ## [观察者和发布者订阅模式以及区别](https://www.cnblogs.com/onepixel/p/10806891.html)
 
@@ -260,21 +261,21 @@ watch:
 
 * 压缩包体积更小
 
-当前最小化并被压缩的 Vue 运行时大小约为 20kB（2.6.10 版为 22.8kB）。Vue 3.0捆绑包的大小大约会减少一半，即只有10kB
+当前最小化并被压缩的 Vue 运行时大小约为 20kB（2. 6. 10 版为 22. 8kB）。Vue 3. 0捆绑包的大小大约会减少一半，即只有10kB
 
 * 数据监听
 
-Vue2.x大家都知道使用的是es5的**object.defineproperties**中getter和setter实现的
-弊端： 就是无法兼听到数组内部的数据变化(当然我们可以通过arr = arr.concat([]))，来实现内部数据变化的检测
-而vue3.0的版本，是基于**Proxy**进行监听的，可以检测到数组内部数据的变化
+Vue2. x大家都知道使用的是es5的**object. defineproperties**中getter和setter实现的
+弊端： 就是无法兼听到数组内部的数据变化(当然我们可以通过arr = arr. concat([]))，来实现内部数据变化的检测
+而vue3. 0的版本，是基于**Proxy**进行监听的，可以检测到数组内部数据的变化
 另一方面基于proxy监听就是所谓的lazy by default，
 什么意思呢，就是只要你用到了才会监听，可以理解为‘按需监听’，官方给出的诠释是：速度加倍，同时内存占用还减半
 
-Object.defineProperty是一个相对比较昂贵的操作，因为它直接操作对象的属性，颗粒度比较小。将它替换为es6的Proxy，在目标对象之上架了一层拦截，代理的是对象而不是对象的属性。这样可以将原本对对象属性的操作变为对整个对象的操作，颗粒度变大
+Object. defineProperty是一个相对比较昂贵的操作，因为它直接操作对象的属性，颗粒度比较小。将它替换为es6的Proxy，在目标对象之上架了一层拦截，代理的是对象而不是对象的属性。这样可以将原本对对象属性的操作变为对整个对象的操作，颗粒度变大
 
-兼容性：IE系列都不兼容Proxy，肯定会有向下兼容的方案，那就是用原始的Object.defineProperty
+兼容性：IE系列都不兼容Proxy，肯定会有向下兼容的方案，那就是用原始的Object. defineProperty
 
-* vue3.0是基于type script重构
+* vue3. 0是基于type script重构
 
 - 
 
@@ -284,11 +285,11 @@ Proxy的优势如下:
 
 * Proxy可以直接监听对象而非属性
 * Proxy可以直接监听数组的变化
-* Proxy有多达13种拦截方法, 不限于apply、ownKeys、deleteProperty、has等等是Object.defineProperty不具备的
-* Proxy返回的是一个新对象, 我们可以只操作新的对象达到目的, 而Object.defineProperty只能遍历对象属性直接修改
+* Proxy有多达13种拦截方法, 不限于apply、ownKeys、deleteProperty、has等等是Object. defineProperty不具备的
+* Proxy返回的是一个新对象, 我们可以只操作新的对象达到目的, 而Object. defineProperty只能遍历对象属性直接修改
 * Proxy作为新标准将受到浏览器厂商重点持续的性能优化，也就是传说中的新标准的性能红利
 
-Object.defineProperty的优势如下:
+Object. defineProperty的优势如下:
 
 * 兼容性好, 支持IE9
 
@@ -297,12 +298,12 @@ Object.defineProperty的优势如下:
 * props/$emit+v-on: 通过props将数据自上而下传递，而通过$emit和v-on来向上传递信息。
 * EventBus: 通过EventBus进行信息的发布与订阅，用它来触发事件和监听事件，从而实现任何组件间的通信，包括父子、隔代、兄弟组件
 * vuex: 是全局数据管理库，可以通过vuex管理全局的数据流
-* $attrs/$listeners: Vue2.4中加入的$attrs/$listeners可以进行跨级的组件通信
+* $attrs/$listeners: Vue2. 4中加入的$attrs/$listeners可以进行跨级的组件通信
 * provide/inject：以允许一个祖先组件向其所有子孙后代注入一个依赖，不论组件层次有多深，并在起上下游关系成立的时间里始终生效，这成为了跨组件通信的基础
 
 ### vuex是做什么的主要解决什么问题，里面的各个文件是如何分工的
 
-Vuex 是一个专为 Vue.js 应用程序开发的状态管理模式。每一个 Vuex 应用的核心就是 store（仓库）。“store” 基本上就是一个容器，它包含着你的应用中大部分的状态 ( state )。
+Vuex 是一个专为 Vue. js 应用程序开发的状态管理模式。每一个 Vuex 应用的核心就是 store（仓库）。“store” 基本上就是一个容器，它包含着你的应用中大部分的状态 ( state )。
 
 * （1）Vuex 的状态存储是响应式的。当 Vue 组件从 store 中读取状态的时候，若 store 中的状态发生变化，那么相应的组件也会相应地得到高效更新。
 * （2）改变 store 中的状态的唯一途径就是显式地提交 (commit) mutation。这样使得我们可以方便地跟踪每一个状态的变化。
@@ -321,7 +322,7 @@ Vuex 是一个专为 Vue.js 应用程序开发的状态管理模式。每一个 
 
 ### [使用过vuessr吗说说ssr](https://juejin.im/post/5cb6c36e6fb9a068af37aa35)
 
-> Vue.js 是构建客户端应用程序的框架。默认情况下，可以在浏览器中输出 Vue 组件，进行生成 DOM 和操作 DOM。然而，也可以将同一个组件渲染为服务端的 HTML 字符串，将它们直接发送到浏览器，最后将这些静态标记"激活"为客户端上完全可交互的应用程序。
+> Vue. js 是构建客户端应用程序的框架。默认情况下，可以在浏览器中输出 Vue 组件，进行生成 DOM 和操作 DOM。然而，也可以将同一个组件渲染为服务端的 HTML 字符串，将它们直接发送到浏览器，最后将这些静态标记"激活"为客户端上完全可交互的应用程序。
 
 即：SSR大致的意思就是vue在客户端将标签渲染成的整个 html 片段的工作在服务端完成，服务端形成的html 片段直接返回给客户端这个过程就叫做服务端渲染。
 
@@ -337,20 +338,20 @@ Vuex 是一个专为 Vue.js 应用程序开发的状态管理模式。每一个 
 
 ### hash模式的实现原理
 
-原理很简单，location.hash 的值就是 URL 中 # 后面的内容
+原理很简单，location. hash 的值就是 URL 中 # 后面的内容
 
 * URL 中 hash 值只是客户端的一种状态，也就是说当向服务器端发出请求时，hash 部分不会被发送；
 * hash 值的改变，都会在浏览器的访问历史中增加一个记录。因此我们能通过浏览器的回退、前进按钮控制hash 的切换；
-* 可以通过 a 标签，并设置 href 属性，当用户点击这个标签后，URL 的 hash 值会发生改变；或者使用  JavaScript 来对 loaction.hash 进行赋值，改变 URL 的 hash 值；
+* 可以通过 a 标签，并设置 href 属性，当用户点击这个标签后，URL 的 hash 值会发生改变；或者使用  JavaScript 来对 loaction. hash 进行赋值，改变 URL 的 hash 值；
 * 可以使用 hashchange 事件来监听 hash 值的变化，从而对页面进行跳转（渲染）
 
 ### history模式的实现原理
 
-> HTML5 提供了 History API 来实现 URL 的变化。其中做最主要的 API 有以下两个：history.pushState() 和 history.repalceState()。这两个 API 可以在不进行刷新的情况下，操作浏览器的历史纪录。唯一不同的是，前者是新增一个历史记录，后者是直接替换当前的历史记录，如下所示：
+> HTML5 提供了 History API 来实现 URL 的变化。其中做最主要的 API 有以下两个：history. pushState() 和 history. repalceState()。这两个 API 可以在不进行刷新的情况下，操作浏览器的历史纪录。唯一不同的是，前者是新增一个历史记录，后者是直接替换当前的历史记录，如下所示：
 
 * pushState 和 repalceState 两个 API 来操作实现 URL 的变化 ；
 * 我们可以使用 popstate  事件来监听 url 的变化，从而对页面进行跳转（渲染）；
-* history.pushState() 或 history.replaceState() 不会触发 popstate 事件，这时我们需要手动触发页面跳转（渲染）
+* history. pushState() 或 history. replaceState() 不会触发 popstate 事件，这时我们需要手动触发页面跳转（渲染）
 
 ## [vue中key的作用](https://juejin.im/post/5aae19aa6fb9a028d4445d1a)
 
@@ -392,24 +393,30 @@ push: Vue的响应式系统则是push的代表, 当Vue程序初始化的时候�
 
 > 而正是这种做法引发了性能问题，要初始化一个父组件，必然需要先初始化它的子组件，而子组件又有它自己的子组件。那么要初始化根标签<app>，就需要从底层开始冒泡，将页面所有组件都初始化完。所以我们的页面会在所有组件都初始化完才开始显示
 
-```js
-<body>
-    <app></app> 
-</body>
+``` js
+< body >
+    <
+    app > < /app>  <
+    /body>
 ```
-> 解决方案：我们给要延迟渲染的组件加上v-if,v-if是惰性的，只有当第一次值为true时才会开始初始化
-```js
-<app>
-    <A></A>
-    <B v-if="showB"></B>
-    <C v-if="showC"></C>
-</app>
+
+> 解决方案：我们给要延迟渲染的组件加上v-if, v-if是惰性的，只有当第一次值为true时才会开始初始化
+
+``` js
+< app >
+    <
+    A > < /A> <
+    B v -
+    if = "showB" > < /B> <
+C v -
+    if = "showC" > < /C> <
+    /app>
 new Vue({
     data: {
         showB: false,
         showC: false
     },
-    created () {
+    created() {
         // 显示B
         setTimeout(() => {
             this.showB = true;
@@ -421,9 +428,12 @@ new Vue({
     }
 });
 ```
+
 2. vue依赖：初始化时，vue会对data做getter、setter改造，但仍然有优化空间
+
   
-> Object.freeze()是ES5新增的API，用来冻结一个对象，禁止对象被修改, 如果你确保某个data不需要跟踪依赖，可以使用Object.freeze将其冻结。但请注意，被冻结的是对象的值，你仍然可以将引用整个替换调
+
+> Object. freeze()是ES5新增的API，用来冻结一个对象，禁止对象被修改, 如果你确保某个data不需要跟踪依赖，可以使用Object. freeze将其冻结。但请注意，被冻结的是对象的值，你仍然可以将引用整个替换调
 
 ## 高阶组件封装，HOC
 

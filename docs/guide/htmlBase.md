@@ -31,7 +31,7 @@ DOCTYPE是html5标准网页声明，且必须声明在HTML文档的第一行。�
 
 ## html和xhtml和xml有什么区别
 
-* HTML(超文本标记语言): 在html4.0之前HTML先有实现再有标准，导致HTML非常混乱和松散
+* HTML(超文本标记语言): 在html4. 0之前HTML先有实现再有标准，导致HTML非常混乱和松散
 * XML(可扩展标记语言): 主要用于**存储数据和结构**，可扩展，大家熟悉的JSON也是相似的作用，但是更加轻量高效，所以XML现在市场越来越小了
 * XHTML(可扩展超文本标记语言): 基于上面两者而来，W3C为了解决HTML混乱问题而生，并基于此诞生了HTML5，开头加入 `<!DOCTYPE html>` 的做法因此而来，如果不加就是兼容混乱的HTML，加了就是标准模式。(其实XHTML就是严谨而准确的HTML。如果说HTML是汉语，那么XHTML就是标准普通话)
 
@@ -126,7 +126,7 @@ rel = "stylesheet" / >
 
 * 区别1：link是XHTML标签，除了加载CSS外，还可以定义RSS等其他事务；@import属于CSS范畴，只能加载CSS。
 * 区别2：link引用CSS时，在页面载入时同时加载；@import需要页面网页完全载入以后加载(重要)
-* 区别3：link是XHTML标签，无兼容问题；@import是在CSS2.1提出的，低版本的浏览器不支持。
+* 区别3：link是XHTML标签，无兼容问题；@import是在CSS2. 1提出的，低版本的浏览器不支持。
 * 区别4：link支持使用Javascript控制DOM去改变样式；而@import不支持。
 
 **src (Source)**源这个属性是将资源嵌入到当前文档中元素所在的位置。例如当我们写：

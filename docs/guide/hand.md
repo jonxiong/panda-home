@@ -38,7 +38,7 @@
 
 差集：以属于A而不属于B的元素为元素的集合成为A与B的差
 
-es7：Array.prototype.includes
+es7：Array. prototype. includes
 
 ``` js
 // 并集
@@ -50,7 +50,7 @@ let difference = a.concat(b).filter(v => a.includes(v) && !b.includes(v));
 ```
 
 es6:
-ES6中新增的一个Array.from方法，用于将类数组对象和可遍历对象转化为数组。只要类数组有length长度，基本都可以转化为数组。结合Set结构实现数学集求解
+ES6中新增的一个Array. from方法，用于将类数组对象和可遍历对象转化为数组。只要类数组有length长度，基本都可以转化为数组。结合Set结构实现数学集求解
 
 ``` js
 let a = [1, 2, 3]
@@ -69,6 +69,82 @@ let differenceNew = Array.from(new Set(a.concat(b).filter(v => aSet.has(v) && !b
 
 ### [函数的防抖和截流](https://juejin.im/post/5b7b88d46fb9a019e9767405)
 
+* debounce（防抖），简单来说就是防止抖动
+
+``` js
+window.onload = function() {
+    // 1、获取这个按钮，并绑定事件
+    var myDebounce = document.getElementById("debounce");
+    myDebounce.addEventListener("click", debounce(sayDebounce));
+}
+
+// 2、防抖功能函数，接受传参
+function debounce(fn) {
+    // 4、创建一个标记用来存放定时器的返回值
+    let timeout = null;
+    return function() {
+        // 5、每次当用户点击/输入的时候，把前一个定时器清除
+        clearTimeout(timeout);
+        // 6、然后创建一个新的 setTimeout，
+        // 这样就能保证点击按钮后的 interval 间隔内
+        // 如果用户还点击了的话，就不会执行 fn 函数
+        timeout = setTimeout(() => {
+            fn.call(this, arguments);
+        }, 1000);
+    };
+}
+
+// 3、需要进行防抖的事件处理
+function sayDebounce() {
+    // ... 有些需要防抖的工作，在这里执行
+    console.log("防抖成功！");
+}
+```
+
+> 任务频繁触发的情况下，只有任务触发的间隔超过指定间隔的时候，任务才会执行
+>  
+
+结合上面的代码，我们可以了解到，在触发点击事件后，如果用户再次点击了，我们会清空之前的定时器，重新生成一个定时器。意思就是：这件事儿需要等待，如果你反复催促，我就重新计时
+
+* throttle(节流)
+
+``` js
+window.onload = function() {
+    // 1、获取按钮，绑定点击事件
+    var myThrottle = document.getElementById("throttle");
+    myThrottle.addEventListener("click", throttle(sayThrottle));
+}
+
+// 2、节流函数体
+function throttle(fn) {
+    // 4、通过闭包保存一个标记
+    let canRun = true;
+    return function() {
+        // 5、在函数开头判断标志是否为 true，不为 true 则中断函数
+        if (!canRun) {
+            return;
+        }
+        // 6、将 canRun 设置为 false，防止执行之前再被执行
+        canRun = false;
+        // 7、定时器
+        setTimeout(() => {
+            fn.call(this, arguments);
+            // 8、执行完事件（比如调用完接口）之后，重新将这个标志设置为 true
+            canRun = true;
+        }, 1000);
+    };
+}
+
+// 3、需要节流的事件
+function sayThrottle() {
+    console.log("节流成功！");
+}
+```
+
+> 节流：指定时间间隔内只会执行一次任务
+
+[参考文章](https://juejin.im/post/5c87b54ce51d455f7943dddb#chapter-three-one)
+
 ### [观察者模式和监听发布者模式](https://www.cnblogs.com/onepixel/p/10806891.html)
 
 ## 较难算法
@@ -85,10 +161,12 @@ https://juejin.im/post/5eb8b1f7e51d4540bb617226
 
 ``` js
 var b = 1
+
 function b() {
     console.log(2)
 }
 console.log(b)
+
 function b() {
     console.log(3)
 }
@@ -96,6 +174,7 @@ function b() {
 
 ``` js
 var a = 1
+
 function fun() {
     a++
     console.log(a)
@@ -117,13 +196,13 @@ var args = Array.prototype.slice.call(arguments);
 
 方法二：
 
-```js
+``` js
 var args = [].slice.call(arguments, 0);
 ```
 
 方法三：
 
-```js
+``` js
 var args = [];
 for (var i = 1; i < arguments.length; i++) {
     args.push(arguments[i]);
@@ -186,13 +265,13 @@ Function.prototype.getName = function() {
 * 字符串：截取字符串中a到b的位置(不包括b), 长度为 b-a, 如果b为负数，这时候b可以看做 字符串length-b
 * 数组: 操作形式结果与字符串一样
 
-arr.slice(a, b)获取数组a到b项（不包括b项, 截取的长度为b-a）**对原数组没有影响！！**
+arr. slice(a, b)获取数组a到b项（不包括b项, 截取的长度为b-a）**对原数组没有影响！！**
 slice(-1)获取数组最后一项（如果是string的话返回最后一个字符）
 
 ### splice(数组)
 
 splice 对数组 截取 **直接更改原数组!!!**
-arr.splice(a, b, c)
+arr. splice(a, b, c)
 a: 参数开始的位置
 b: 删除个数（没写或者为0则全部删除）
 c: 新增参数
@@ -202,14 +281,14 @@ c: 新增参数
 将字符串分割为字符串数组，并返回此数组
 直接看例子
 var str = "I, am, xiong"
-str.split(", ") // ["i", "am", "xiong"]
-str.split(", ", 2)//["i", "am"]  后面这个数字为分割的参数，分割的次数将不超出这个数字
-str.split("")//["i", ", ", "a", "m", ", ", "x", "i", "o", "n", "g"]
-str.split(" ")//["i, am, xiong"]
+str. split(", ") // ["i", "am", "xiong"]
+str. split(", ", 2)//["i", "am"]  后面这个数字为分割的参数，分割的次数将不超出这个数字
+str. split("")//["i", ", ", "a", "m", ", ", "x", "i", "o", "n", "g"]
+str. split(" ")//["i, am, xiong"]
 
 ## 实现一个函数getNum, 按照如下规则输出第count个数结果
 
-> 已知数列规则为[1, 3, 7, 13, 21, 31, 43, ...]
+> 已知数列规则为[1, 3, 7, 13, 21, 31, 43, ... ]
 > 输入：3 输出13
 
 ## 数组乱排

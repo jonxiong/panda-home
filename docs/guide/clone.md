@@ -5,18 +5,18 @@
   - [浅拷贝与深拷贝](#浅拷贝与深拷贝)
   - [浅拷贝与赋值的区别](#浅拷贝与赋值的区别)
   - [浅克隆](#浅克隆)
-    - [Array.prototype.concat()](#arrayprototypeconcat)
-    - [Array.prototype.slice()](#arrayprototypeslice)
-    - [Object.assign()](#objectassign)
+    - [Array. prototype. concat()](#array-prototype-concat)
+    - [Array. prototype. slice()](#array-prototype-slice)
+    - [Object. assign()](#object-assign)
   - [深克隆](#深克隆)
-    - [JSON.pares方法](#jsonpares方法)
+    - [JSON. pares方法](#json-pares方法)
     - [构造一个深clone函数](#构造一个深clone函数)
     - [函数库lodash](#函数库lodash)
 
 ## 数据类型
 
-- 基本数据类型的特点：直接存储在栈(stack)中的数据
-- 引用数据类型的特点：存储的是该对象在栈中引用，真实的数据存放在堆内存里
+* 基本数据类型的特点：直接存储在栈(stack)中的数据
+* 引用数据类型的特点：存储的是该对象在栈中引用，真实的数据存放在堆内存里
 
 ## 浅拷贝与深拷贝
 
@@ -27,16 +27,15 @@
 
 ![0](https://user-gold-cdn.xitu.io/2018/12/23/167da74d45d3103b?imageView2/0/w/1280/h/960/format/webp/ignore-error/1)
 
-
 ## 浅克隆
 
 浅克隆只是clone了对象的最外面一层，至于更深层的对象，依然是通过引用指向同一块堆内存
 
-### Array.prototype.concat()
+### Array. prototype. concat()
 
-### Array.prototype.slice()
+### Array. prototype. slice()
 
-### Object.assign()
+### Object. assign()
 
 ``` js
 function shallowClone(o) {
@@ -60,20 +59,19 @@ const oldObj = {
 const newobj = shallowClone(oldObj);
 console.log(newobj.c.h, oldObj.c.h);
 console.log(newobj.c.h === oldObj.c.h) //可以看出他们指向同一段堆内存
-
 ```
 
-我们可以看到, 很明显虽然 `oldObj.c.h` 被克隆了, 但是它还与 `oldObj.c.h` 相等, 这表明他们依然指向同一段堆内存, 这就造成了如果对 `newObj.c.h` 进行修改, 也会影响 `oldObj.c.h` , 这就不是一版好的克隆.
+我们可以看到, 很明显虽然 `oldObj.c.h` 被克隆了, 但是它还与 `oldObj.c.h` 相等, 这表明他们依然指向同一段堆内存, 这就造成了如果对 `newObj.c.h` 进行修改, 也会影响 `oldObj.c.h` , 这就不是一版好的克隆. 
 
 ## 深克隆
 
-### JSON.pares方法
+### JSON. pares方法
 
 ``` js
 const newObj = JSON.parse(JSON.stringify(oldObj));
 ```
 
-确实, 这个方法虽然可以解决绝大部分是使用场景, 但是却有很多坑.
+确实, 这个方法虽然可以解决绝大部分是使用场景, 但是却有很多坑. 
 
 1. 他无法实现对函数 、RegExp等特殊对象的克隆
 2. 会抛弃对象的constructor, 所有的构造函数会指向Object
@@ -197,11 +195,15 @@ const clone = parent => {
 
 ### 函数库lodash
 
-```js
+``` js
 var _ = require('lodash');
 var obj1 = {
     a: 1,
-    b: { f: { g: 1 } },
+    b: {
+        f: {
+            g: 1
+        }
+    },
     c: [1, 2, 3]
 };
 var obj2 = _.cloneDeep(obj1);

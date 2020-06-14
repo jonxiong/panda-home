@@ -68,8 +68,6 @@ Http协议是建立在TCP协议基础之上的，当浏览器需要从服务器�
 
 2. 第二次握手，server to client【授予连接】- 我能接受数据，你能接收到我给你的数据吗
 
-  
-
 3. 第三次握手，client to server【确认】- 我能接收到你返回的数据，连接ok
 
 客户端再次发送确认包(ACK)，SYN 标志位为0，ACK 标志位为1，并且把服务器发来 ACK 的序号字段+1，放在确定字段中发送给对方，并且在数据段放写ISN的+1
@@ -82,7 +80,7 @@ TCP 的连接的拆除需要发送四个包，因此称为四次挥手(Four-way 
 
 * 第一次挥手：clientToServer（C: 发送FIN，我没有数据给你了）
 * 第二次挥手：serverToClient（S: 好的我知道要关闭请求了，我准备关闭连接）
-* 第三次挥手：serverToClient（S: 我再没有数据给你了，我准备好关系连接了）
+* 第三次挥手：serverToClient（S: 我再没有数据给你了，我准备好关闭连接了）
 * 第四次挥手：clientToServer（C: 好的收完了，你可以关闭我们之间的数据传输通道了，S收到确认信息，关闭连接）
 
 ## http有哪些方法
@@ -223,7 +221,7 @@ document.cookie = "name = value; path=/";
 ```
 
 domain: 表示的是cookie所在的域，默认为请求的地址
-为什么www. 百度 和yun.baidu共享cookie，我们只需要设置domain为.baidu.com就可以了
+为什么www. 百度 和yun. baidu共享cookie，我们只需要设置domain为. baidu. com就可以了
 
 * localstorage
 
@@ -355,7 +353,7 @@ $.ajax({
 
 * axios
 
-> Vue2.0之后，尤雨溪推荐大家用axios替换JQuery ajax，想必让Axios进入了很多人的目光中。Axios本质上也是**对原生XHR的封装**，只不过它是Promise的实现版本，符合最新的ES规范
+> Vue2. 0之后，尤雨溪推荐大家用axios替换JQuery ajax，想必让Axios进入了很多人的目光中。Axios本质上也是**对原生XHR的封装**，只不过它是Promise的实现版本，符合最新的ES规范
 
 特点：
 
