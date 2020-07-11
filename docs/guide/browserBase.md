@@ -144,7 +144,7 @@ https://juejin.im/post/5b88ddca6fb9a019c7717096
 
 postion:absolute; left:100px; 会不会引起？不会
 translateX:100px; 会不会引起？不会
-getBoundingClientRect会不会引起？会
+getBoundingClientRect 会不会引起？会
 getClientWidth、getClientHeight会不会引起？会
 
 ## [dom事件流](https://juejin.im/post/5cb677026fb9a0686f3d2c63)
@@ -179,10 +179,14 @@ getClientWidth、getClientHeight会不会引起？会
 
 ### 解决方案
 
-* 只用touchstart，注意a标签需要换成JavaScript:void（0）
+* 只用touchstart，注意a标签需要换成JavaScript:void（0）：有下面的问题
+  + touchstart是手指触摸屏幕就触发，有时候用户只是想滑动屏幕，却触发了touchstart事件，这不是我们想要的结果
+  + 使用touchstart事件在某些场景下可能会出现点击穿透的现象
 * 只用click(不建议)：但是有300ms延迟
-* 加动画隐藏元素
-* fastclick
+* 禁止缩放 <meta name="viewport" content="user-scalable=no" />
+* fastclick（建议）
+
+> fastClick 在 touchend 阶段 调用 event.preventDefault，然后通过 document.createEvent 创建一个 MouseEvents，然后 通过 event​Target​.dispatch​Event 触发对应目标元素上绑定的 click 事件
 
 ## 是否了解Dom1, Dom2, Dom3以及他们的区别
 

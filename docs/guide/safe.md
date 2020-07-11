@@ -26,3 +26,6 @@ XSS防范:
 xss偏向方法论，代码实现
 csrf偏向一个攻击结果
 xss是实现csrf诸多路径中的一条
+
+[参考文章](https://tech.meituan.com/2018/09/27/fe-security.html)
+[参考文章](https://tech.meituan.com/2018/10/11/fe-security-csrf.html)
