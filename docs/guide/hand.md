@@ -8,11 +8,12 @@
     - [求数组交集，并集, 差集](#求数组交集并集-差集)
     - [找出数组中出现次数最多元素，并给出其出现过的位置](#找出数组中出现次数最多元素并给出其出现过的位置)
     - [函数的防抖和截流](#函数的防抖和截流)
-    - [观察者模式和监听发布者模式](#观察者模式和监听发布者模式)
+  - [观察者模式和监听发布者模式](#观察者模式和监听发布者模式)
   - [较难算法](#较难算法)
   - [大数 加减乘除](#大数-加减乘除)
   - [快速排序算法](#快速排序算法)
   - [手写promise, slice](#手写promise-slice)
+  - [数组](#数组)
   - [代码题](#代码题)
   - [argument是什么类型，如何转换成数组](#argument是什么类型如何转换成数组)
   - [如何获取函数的名字](#如何获取函数的名字)
@@ -145,7 +146,75 @@ function sayThrottle() {
 
 [参考文章](https://juejin.im/post/5c87b54ce51d455f7943dddb#chapter-three-one)
 
-### [观察者模式和监听发布者模式](https://www.cnblogs.com/onepixel/p/10806891.html)
+## [观察者模式和监听发布者模式](https://www.cnblogs.com/onepixel/p/10806891.html)
+
+> 订阅-发布模式
+
+``` js
+classPubSub {
+    constructor() {
+        this.subscribers = [];
+    }
+    subscribe(topic, callback) {
+        letcallbacks = this.subscribers[topic];
+        if (!callbacks) {
+            this.subscribers[topic] = [callback];
+        } else {
+            callbacks.push(callback);
+        }
+    }
+    publish(topic, ...args) {
+        letcallbacks = this.subscribers[topic] || [];
+        callbacks.forEach(callback => callback(...args));
+    }
+}
+
+// 创建事件调度中心，为订阅者和发布者提供调度服务
+letpubSub = newPubSub();
+// A订阅了SMS事件（A只关注SMS本身，而不关心谁发布这个事件）
+pubSub.subscribe('SMS', console.log);
+// B订阅了SMS事件
+pubSub.subscribe('SMS', console.log);
+// C发布了SMS事件（C只关注SMS本身，不关心谁订阅了这个事件）
+pubSub.publish('SMS', 'I published `SMS` event');
+```
+
+> 观察者模式
+
+``` js
+classSubject {
+    constructor() {
+        this.observers = [];
+    }
+
+    add(observer) {
+        this.observers.push(observer);
+    }
+
+    notify(...args) {
+        this.observers.forEach(observer => observer.update(...args));
+    }
+}
+
+classObserver {
+    update(...args) {
+        console.log(...args);
+    }
+}
+
+// 创建观察者ob1
+letob1 = newObserver();
+// 创建观察者ob2
+letob2 = newObserver();
+// 创建目标sub
+letsub = newSubject();
+// 目标sub添加观察者ob1 （目标和观察者建立了依赖关系）
+sub.add(ob1);
+// 目标sub添加观察者ob2
+sub.add(ob2);
+// 目标sub触发SMS事件（目标主动通知观察者）
+sub.notify('I fired `SMS` event');
+```
 
 ## 较难算法
 
@@ -156,6 +225,8 @@ function sayThrottle() {
 ## 手写promise, slice
 
 https://juejin.im/post/5eb8b1f7e51d4540bb617226
+
+## [数组](https://juejin.im/post/5d71fff5f265da03e4678328)
 
 ## 代码题
 
