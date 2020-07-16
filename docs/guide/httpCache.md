@@ -105,8 +105,6 @@ Cache-Control有很多属性，不同的属性代表的意义也不同
 * 3）强缓存与协商缓存的共同点是：如果命中，都是从客户端缓存中加载资源，而不是从服务器加载资源数据；区别是：强缓存不发请求到服务器，协商缓存会发请求到服务器。
 * 4）当协商缓存也没有命中的时候，浏览器直接从服务器加载资源数据。
 
-  
-
 ## keep alive
 
 > 在 HTTP 1. 0 时期，每个 TCP 连接只会被一个 HTTP Transaction（请求加响应）使用。之后，这个 TCP 连接便会被关闭。当网页内容越来越复杂，包含大量图片、CSS 等资源之后，这种模式效率就显得太低了。所以，在 HTTP 1. 1 中，引入了 HTTP persistent connection 的概念，也称为 HTTP keep-alive（后面统一称呼为 HTTP 长连接）
@@ -115,3 +113,4 @@ Cache-Control有很多属性，不同的属性代表的意义也不同
 
 [跟http缓存相关的header](https://juejin.im/post/5b3c87386fb9a04f9a5cb037)
 [参考文章](https://juejin.im/post/5b9346dcf265da0aac6fbe57#heading-3)
+[网络HTTP](https://juejin.im/post/5872309261ff4b005c4580d4)

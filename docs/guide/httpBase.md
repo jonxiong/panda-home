@@ -269,7 +269,7 @@ HTTP = HTTP + SSL
 * HTTP服务器，默认端口号为80/tcp（木马Executor开放此端口）
 * HTTPS（securely transferring web pages）服务器，默认端口号为443/tcp  443/udp
 
-## 什么是跨域，解决跨域的方法及原理是什么
+## [什么是跨域，解决跨域的方法及原理是什么](https://segmentfault.com/a/1190000011145364)
 
 * 1. 不同源就是跨域
 * 2. 同源策略是浏览器的一种安全策略
@@ -309,7 +309,7 @@ function jsonp({
             arrs.push( `${key}=${params[key]}` )
         }
         // 后台获取数据的接口拼接上参数
-        script.src = `${url}?${arrs.join('&')}` 
+        script.src = `${url}?${arrs.join('&')}`
         // srcipt插入
         document.body.appendChild(script)
     })

@@ -8,125 +8,37 @@
 
 ## html
 - [HTML基础](#html基础)
-  - [doctype的作用是什么](#doctype的作用是什么)
-  - [怪异模式和标准模式的区别是什么](#怪异模式和标准模式的区别是什么)
-  - [html和xhtml和xml有什么区别](#html和xhtml和xml有什么区别)
-  - [什么是data-属性](#什么是data-属性)
-  - [对html语义化的理解](#对html语义化的理解)
-  - [html5与html4的不同之处](#html5与html4的不同之处)
-  - [有哪些常用的meta标签](#有哪些常用的meta标签)
-  - [src和href的区别](#src和href的区别)
-  - [script标签中defer和async的区别✨](#script标签中defer和async的区别)
-  - [iframe有那些缺点✨](#iframe有那些缺点)
-
-## CSS
-
-- [css基本元素类型✨](#css基本元素类型)
-- [img元素✨](#img元素)
-- [css选择器的优先级Î](#css选择器的优先级î)
-  - [!important优先级（最高）](#important优先级最高)
-  - [css选择器有哪些什么属性可以继承✨](#css选择器有哪些什么属性可以继承)
-- [link和import的区别](#link和import的区别)
-- [css有哪些方式可以隐藏页面元素✨](#css有哪些方式可以隐藏页面元素) 2
-  - [【追问】**opacity:0**和**visibility:hidden**都可以隐藏页面元素，它们的区别？✨](#追问opacity0和visibilityhidden都可以隐藏页面元素它们的区别)
-- [em和px和rem区别✨](#em和px和rem区别)
-  - [用rem的坏处✨](#用rem的坏处)
-- [什么是viewport](#什么是viewport)
-  - [通过viewport我们可以做什么, 在项目中如何做的适配](#通过viewport我们可以做什么-在项目中如何做的适配)
-- [移动端适配1px的问题（考察dpr）✨](#移动端适配1px的问题考察dpr) 1
-  - [物理像素(physical pixel/`piksl/)](#物理像素physical-pixelpiksl)
-  - [设备独立像素(density-independent pixel)](#设备独立像素density-independent-pixel)
-  - [设备像素比(device pixel ratio )](#设备像素比device-pixel-ratio-)
-- [怎么让chrome支持小于12px的文字✨](#怎么让chrome支持小于12px的文字)
-- [css有几种定位方式✨](#css有几种定位方式)
-- [如何理解z-index](#如何理解z-index)
-- [清除浮动有哪些方法](#清除浮动有哪些方法)
-- [谈谈对bfc的理解✨](#谈谈对bfc的理解)
+  - [script标签中defer和async的区别✨](#script标签中defer和async的区别) 
+  - [移动端点击穿透问题✨](#移动端点击穿透问题)3.5 fastclick解决不太
+  - [浏览器不同tab之间如何通信✨](#浏览器不同tab之间如何通信)
+  - [重绘与重排] 3.5
+    - [会导致重排的因素](#会导致重排的因素)
+    - [如何避免重绘重排](#如何避免重绘重排)
+  - [移动端适配1px的问题（考察dpr）✨✨](#移动端适配1px的问题考察dpr) 3.5
+  - [谈谈对bfc的理解✨](#谈谈对bfc的理解) 3.5
   - [什么是bfc](#什么是bfc)
   - [bfc触发条件](#bfc触发条件)
   - [bfc作用](#bfc作用)
 - [什么时候会触发重绘和重排，区别以及如何避免✨](#什么时候会触发重绘和重排区别以及如何避免)
-- [translatex与left区别✨](#translatex与left区别)
-- [drop-shadow和box-shadow的区别和作用✨](#drop-shadow和box-shadow的区别和作用)
-- [伪类与伪元素](#伪类与伪元素)
-  - [盒模型（标准盒模型，怪异盒模型）✨](#盒模型标准盒模型怪异盒模型)
-- [stylus/sass/less区别](#stylussassless区别)
-- [css写法注意点](#css写法注意点)
-- [浏览器是怎样解析css选择器的](#浏览器是怎样解析css选择器的)
-- [动画gpu加速✨](#动画gpu加速)
-- [垂直居中列举想到的✨](#垂直居中列举想到的)
-
-## Browser
-
-- [一个页面从输入url到显示经历了什么✨]3(#一个页面从输入url到显示经历了什么)
-  - [网络通信](#网络通信)
-  - [渲染](#渲染)
-  - [DOM构建](#dom构建)
-  - [CSS构建](#css构建)
-  - [Render树](#render树)
-  - [DOMContentLoaded与onload的区别](#domcontentloaded与onload的区别)
-  - [JS执行会阻塞DOM树的解析和渲染 说的有问题 ，那么CSS加载会阻塞DOM树的解析和渲染吗]0(#js执行会阻塞dom树的解析和渲染那么css加载会阻塞dom树的解析和渲染吗)
-- [浏览器如何解析css选择器](#浏览器如何解析css选择器)
-- [重绘与重排](#重绘与重排)
-  - [会导致重排的因素](#会导致重排的因素)
-  - [如何避免重绘重排](#如何避免重绘重排)
-- [dom事件流](#dom事件流)
-- [移动端点击穿透问题✨](#移动端点击穿透问题) 0
-  - [解决方案](#解决方案)
-- [是否了解Dom1, Dom2, Dom3以及他们的区别](#是否了解dom1-dom2-dom3以及他们的区别)
-- [什么是事件委托](#什么是事件委托)
-  - [优点](#优点)
-  - [局限性](#局限性)
-- [页面白屏和首屏时间是怎么计算的✨](#如何判断页面白屏如果出现白屏怎么排查)
-- [v8引擎](#v8引擎)
-- [前端如何实现实时通讯](#前端如何实现实时通讯)
-  - [短轮询](#短轮询)
-  - [comet](#comet)
-  - [SSE](#sse)
-  - [Websocket](#websocket)
-  - [Web Worker](#web-worker)
-  - [Service workers](#service-workers)
-- [浏览器不同tab之间如何通信✨](#浏览器不同tab之间如何通信)
-
-## JS基础
-es6 2.5
-promise
-- [JS基础](#js基础)
-  - [js数据类型都有什么✨](#js数据类型都有什么)
-  - [null与undefined的区别是什么✨](#null与undefined的区别是什么)
-  - [为什么会有bigint提案](#为什么会有bigint提案)
-  - [0.1加0.2为什么不等于0.3](#01加02为什么不等于03)
-  - [类型转换的规则](#类型转换的规则)
-    - [类型转换的原理是什么](#类型转换的原理是什么)
-  - [解释下变量提升✨](#解释下变量提升)
-  - [js是解释型还是编译型语言可引深jit✨](#js是解释型还是编译型语言可引深jit)
-    - [编译型语言：C，C##，JAVA](#编译型语言ccjava)
-    - [解释型语言：SQL，Python](#解释型语言sqlpython)
-    - [优缺点](#优缺点)
-  - [js变量类型](#js变量类型)
-  - [js的作用域和作用域链](#js的作用域和作用域链)
-    - [全局作用域](#全局作用域)
-    - [局部作用域](#局部作用域)
-    - [ES6块级作用域](#es6块级作用域)
-    - [什么是作用域链](#什么是作用域链)
-    - [作用域链的本质](#作用域链的本质)
-  - [谈谈对原型链的理解✨](#谈谈对原型链的理解)3
-    - [原型对象](#原型对象)
-    - [原型链](#原型链)
-  - [理解闭包吗](#理解闭包吗)2.5
+- 
+- [动画gpu加速✨](#动画gpu加速)4
+- requestAnimaton
+- trans:3d will-change
+  - [理解闭包吗](#理解闭包吗) 3.5
     - [概念](#概念)
     - [用途](#用途)
-  - [讲讲js垃圾回收是怎么做的？✨](#讲讲js垃圾回收是怎么做的) 1.5
-  - [this的理解✨](#this的理解)
-    - [箭头函数的this指向哪里](#箭头函数的this指向哪里)
-  - [call与apply与bind区别✨](#call与apply与bind区别)
-  - [async和await是什么✨](#async和await是什么)
-    - [async/await相比于promise的优势](#asyncawait相比于promise的优势) 3
-  - [函数式编程](#函数式编程)
-    - [函数的合成和柯里化](#函数的合成和柯里化)
-    - [合成](#合成)
-    - [柯里化](#柯里化)
-  - [响应](#响应)
+  - [讲讲js垃圾回收是怎么做的？✨](#讲讲js垃圾回收是怎么做的) 3.5（知道一种）
+  - [谈谈对原型链的理解✨](#谈谈对原型链的理解)
+  - [原型对象](#原型对象)
+  - [原型链](#原型链)
+  - es6都用过什么
+   class和构造函数的区别 4
+   - 写法
+   - 
+   JS模块化：4
+   commonJs
+
+
 
 ### HTTP
 
@@ -196,9 +108,9 @@ promise
     - [proxy与objectdefinedproperty的优点✨](#proxy与objectdefinedproperty的优点)
   - [vue组件间通信有哪几种方式✨](#vue组件间通信有哪几种方式)
     - [vuex是做什么的主要解决什么问题，里面的各个文件是如何分工的](#vuex是做什么的主要解决什么问题里面的各个文件是如何分工的)
-  - [如何解决vue渲染白屏问题✨](#如何解决vue渲染白屏问题) 0
+  - [如何解决vue渲染白屏问题✨](#如何解决vue渲染白屏问题)
     - [使用过vuessr吗说说ssr](#使用过vuessr吗说说ssr)
-  - [能说下vue-router中常用的hash和history路由模式实现原理吗](#能说下vue-router中常用的hash和history路由模式实现原理吗) 2，5
+  - [能说下vue-router中常用的hash和history路由模式实现原理吗](#能说下vue-router中常用的hash和history路由模式实现原理吗)
     - [hash模式的实现原理](#hash模式的实现原理)
     - [history模式的实现原理](#history模式的实现原理)
   - [vue中key的作用](#vue中key的作用)
@@ -222,18 +134,24 @@ promise
   - [loder是同步还是异步](#loder是同步还是异步)
   - [如何编写一个loader或者plugin](#如何编写一个loader或者plugin)
   - [webpack跟gulp的区别✨](#webpack跟gulp的区别)
-  - [常用的哪些loader和plugin✨](#常用的哪些loader和plugin)
-  - [babel-loader的编译原理✨](#babel-loader的编译原理)
-  - [Loader和Plugin的不同](#loader和plugin的不同)
+  - [常用的哪些loader和plugin✨](#常用的哪些loader和plugin) 
+  - [babel-loader的编译原理✨](#babel-loader的编译原理) 3.5
+  - [Loader和Plugin相关](#loader和plugin的不同) 插件
   - [webpack是的构建流程是什么✨](#webpack是的构建流程是什么)
   - [如何用webpack来优化前端性能](#如何用webpack来优化前端性能)
   - [webpack的劣势在哪里](#webpack的劣势在哪里)
   - [骨架屏实现✨](#骨架屏实现)
 
+- 页面性能优化 4-
+- 首屏时间
+- 白屏时间
+- load时间
+- 可用时间
 
-### native和前端如何通信
+服务端渲染，
+静态资源 cdn
+懒加载
 
-### 如何唤起app原理
 
 ### js迁移到ts
 
@@ -274,7 +192,9 @@ promise
 
 ### 学习前端的自驱力是
 
-### NPM包管理模式
+### NPM包如何开发的 
+
+新手引导组件：组册，执行， 4 也有做相关单元测试
 
 ### 单元测试、组件自动化测试
 

@@ -11,6 +11,8 @@
     - [react生命周期图](#react生命周期图)
     - [避免不必要的render方法](#避免不必要的render方法)
   - [react ssr (Server Side Rendering)](#react-ssr-server-side-rendering)
+  - [vue&&react区别](#vuereact区别)
+    - [构建工具](#构建工具)
 
 ## 组件
 
@@ -98,7 +100,7 @@
 
 **shouldComponentUpdate()**以让React知道当前状态或属性的改变是否不影响组件的输出，默认返回**ture**，返回**false**时不会重写**render**，而且该方法并不会在初始化渲染或当使用forceUpdate()时被调用
 
-* React.PureComponent
+* React. PureComponent
 
 **React. PureComponent** 与 **React. Component** 几乎完全相同，但 **React. PureComponent** 通过props和state的浅对比来实现 **shouldComponentUpate()**。如果对象包含复杂的数据结构，它可能会因深层的数据不一致而产生错误的否定判断(表现为对象深层的数据已改变视图却没有更新）
 
@@ -106,4 +108,14 @@
 
 ## [react ssr (Server Side Rendering)](https://juejin.im/post/5def0816f265da33aa6aa7fe)
 
+## [vue&&react区别](https://juejin.im/post/5b8b56e3f265da434c1f5f76)
+
+https://juejin.im/post/5b8b56e3f265da434c1f5f76
+
+### 构建工具
+
+* React: Create-React-App (webpack和Babel)
+* Vue: Vue-Cli (可以按需创建不同的模板，使用起来更加灵活一点)
+
 https://juejin.im/post/5c7656b2f265da2dc13c9148
+https://juejin.im/post/5ddde1c15188257a0d22ae1e

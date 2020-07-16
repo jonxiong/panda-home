@@ -8,7 +8,11 @@
     - [css选择器有哪些什么属性可以继承](#css选择器有哪些什么属性可以继承)
   - [link和import的区别](#link和import的区别)
   - [css有哪些方式可以隐藏页面元素](#css有哪些方式可以隐藏页面元素)
-    - [【追问】**opacity:0**和**visibility:hidden**都可以隐藏页面元素，它们的区别？](#追问opacity0和visibilityhidden都可以隐藏页面元素它们的区别)
+    - [**opacity:0**和**visibility:hidden**和**display:none**区别](#opacity0和visibilityhidden和displaynone区别)
+      - [结构](#结构)
+      - [继承](#继承)
+      - [性能](#性能)
+      - [事件监听](#事件监听)
   - [em和px和rem区别](#em和px和rem区别)
     - [用rem的坏处](#用rem的坏处)
   - [什么是viewport](#什么是viewport)
@@ -72,7 +76,7 @@ br、meta、hr、link、input、img
 
 在平常开发中我们会发现img是可以设置宽高的：
 
-* img确实是 `行内元素` 但它也是 `置换元素` 
+* img确实是 `行内元素` 但它也是 `置换元素`
 * 浏览器会根据 `img` 标签的src属性的值来读取图片信息并显示出来，而如果查看(X)HTML代码，看不到图片的实际内容
 * 又例如根据 `input` 标签的type属性来决定是显示输入框，还是单选按钮等。
 * 所以 `img`  `input`  `select`  `textarea`  `button`  `label` 等，他们被称为 `可置换元素` （Replaced element）
@@ -121,7 +125,28 @@ CSS选择器：
 * **z-index:-9999**: 原理是将层级放到底部，这样就被覆盖了，看起来隐藏了
 * **transform: scale(0, 0)**: 平面变换，将元素缩放为0，但是依然占据空间，但不可交互
 
-### 【追问】**opacity:0**和**visibility:hidden**都可以隐藏页面元素，它们的区别？
+### **opacity:0**和**visibility:hidden**和**display:none**区别
+
+#### 结构
+
+* opacity:0 --不会让元素从渲染树消失，渲染元素继续占据空间，只是内容不可见，**可以点击**
+* visibility:hidden --不会让元素从渲染树消失，渲染元素继续占据空间，只是内容不可见，**不能点击**
+* display:none --会让元素完全从渲染树中消失，渲染的时候不占据任何空间, 不能点击
+
+#### 继承
+
+* display: none和opacity: 0：是非继承属性，子孙节点消失由于元素从渲染树消失造成，通过修改子孙节点属性无法显示。 
+* visibility: hidden：是继承属性，子孙节点消失由于继承了hidden，通过设置visibility: visible; 可以让子孙节点显式
+
+#### 性能
+
+* display:none: 重排
+* visibility:hidden && opacity:0: 重绘
+  
+#### 事件监听
+
+opacity: 0;可进行Dom事件监听，其余不行
+
 
 ## em和px和rem区别
 
@@ -215,14 +240,14 @@ BFC是指一个独立的渲染区域，只有Block-level Box参与， 它规定�
 ### bfc触发条件
 
 * 根元素，即HTML元素
-* position: fixed/absolute
-* float 不为none
-* overflow不为visible
-* display的值为inline-block、table-cell、table-caption
+* 绝对定位元素: position: fixed/absolute
+* 浮动元素: float 不为none
+* overflow不为visible(hidden、auto、scroll)
+* display的值为inline-block、table-cell、flex
 
 ### bfc作用
 
-* 防止margin发生重叠
+* 同一个BFC下外边距会发生折叠: 防止margin发生重叠
 * 两栏布局，防止文字环绕等
 * 防止元素塌陷
 

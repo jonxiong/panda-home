@@ -47,11 +47,16 @@ JS的数据类型分为两大类：原始类型和引用类型
 * string
 * undefined
 * null (读音类似no~)
-* symbol
+* symbol （es6新增，表示独一无二的值）
+* bigInt（es10新增）
 
 复杂数据类型：
 
 * Object(function, array, math, date)
+
+原始数据类型：直接存储在栈（stack）中，占据空间小、大小固定，属于被频繁使用数据，所以放入栈中存储
+
+引用数据类型：同时存储在栈（stack）和堆（heap）中，占据空间大、大小不固定。引用数据类型在栈中存储了指针，该指针指向堆中该实体的起始地址。当解释器寻找引用值时，会首先检索其在栈中的地址，取得地址后从堆中获得实体
 
 ## null与undefined的区别是什么
 
@@ -77,7 +82,12 @@ JS 的 *Number* 类型遵循的是 **IEEE 754** 标准 <br/>
 
 ## 类型转换的规则
 
-什么时候可能出现隐式类型转换：在if语句，逻辑语句，数学运算，== 都可能出现
+什么时候可能出现隐式类型转换：
+
+* if语句
+* 逻辑语句
+* 数学运算
+* ==
 
 ![2019-06-23-09-32-17]( https://xiaomuzhu-image.oss-cn-beijing.aliyuncs.com/c378afab84afcdf430aec5229649faee.png)
 
@@ -229,7 +239,7 @@ alert(message); // message is not defined (message已经被销毁)
 
 例如 `hasOwnProperty()` 方法存在于Obejct原型对象中, 它便可以被任何对象当做自己的方法使用. 
 
-> 用法： `object.hasOwnProperty( propertyName )` 
+> 用法： `object.hasOwnProperty( propertyName )`
 > `hasOwnProperty()` 函数的返回值为 `Boolean` 类型。如果对象 `object` 具有名称为 `propertyName` 的属性，则返回 `true` ，否则返回 `false` 。
 
 ``` js

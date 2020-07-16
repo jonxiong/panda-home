@@ -161,6 +161,24 @@ console.log(5)
 * xss了解吗，讲一下，怎么防范
 * 两个有序数组[1, 3, 5, 7, 9, 30], [2, 3, 5, 8, 22, 15, 20]，要求写一个方法，输出排好序的数组，时间复杂度为N
 
+
+1. react hook 原理？- 不清楚原理，介绍了比较多用法 - 3.5
+> 解决了副作用等问题useEffect，了解比较多的用法
+2. react vdom 算法 - 没了解 - 2
+> 简单知道下解决的问题
+3. 受控组件与非受控组件区别 - 3.5
+4. 如何实现长距离父子组件通信 - 3（提到了 emit，没提到 context，错误的提到 fiber）；
+5. redux 的优缺点 - 3
+
+6. fis3 如何识别循环依赖 - 3
+7. 性能优化 - 3.5
+    fis3 - inline、script（preload，prefetch）  （有自己写 fis3 插件）
+8. Javascript 是单线程，那它是如何实现同步和异步的？介绍了 eventloop  - 4
+9. git commit diff view - 4
+    算法 - （使用了系统的 diff => 存文件，使用 node子进程做的diff逻辑）
+    页面组件设计 - 基本未涉及
+10. SSR- 未用过，Node - 有简单使用；
+11. pm2 - 有简单用过；
 ## 相关文章
 
 https://juejin.im/post/5cc1da82f265da036023b628

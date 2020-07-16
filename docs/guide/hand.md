@@ -13,7 +13,7 @@
   - [大数 加减乘除](#大数-加减乘除)
   - [快速排序算法](#快速排序算法)
   - [手写promise, slice](#手写promise-slice)
-  - [数组](#数组)
+    - [promise实现串行 并行请求](#promise实现串行-并行请求)
   - [代码题](#代码题)
   - [argument是什么类型，如何转换成数组](#argument是什么类型如何转换成数组)
   - [如何获取函数的名字](#如何获取函数的名字)
@@ -23,6 +23,14 @@
   - [实现一个函数getNum, 按照如下规则输出第count个数结果](#实现一个函数getnum-按照如下规则输出第count个数结果)
   - [数组乱排](#数组乱排)
   - [用class写出发布者订阅模式，实现on，off，once(一次绑定)](#用class写出发布者订阅模式实现onoffonce一次绑定)
+  - [打点如何设计，打点如何不遗漏，如何全局捕获 Promise 异常？](#打点如何设计打点如何不遗漏如何全局捕获-promise-异常)
+  - [如何解决请求拦截的安全问题](#如何解决请求拦截的安全问题)
+    - [如何做内容加密？如何解决请求重放？](#如何做内容加密如何解决请求重放)
+  - [二向箔重构做了哪些事情？](#二向箔重构做了哪些事情)
+  - [线上问题如何排查](#线上问题如何排查)
+  - [随机生成1000个1到1000以内的数字](#随机生成1000个1到1000以内的数字)
+  - [同内容同 hash 文件更新，缓存如何让缓存继续生效](#同内容同-hash-文件更新缓存如何让缓存继续生效)
+  - [字符串消消乐 大于几个字母的时候消除](#字符串消消乐-大于几个字母的时候消除)
 
 ## 组件实现
 
@@ -226,7 +234,95 @@ sub.notify('I fired `SMS` event');
 
 https://juejin.im/post/5eb8b1f7e51d4540bb617226
 
-## [数组](https://juejin.im/post/5d71fff5f265da03e4678328)
+### promise实现串行 并行请求
+
+``` js
+/**
+ * 创建promise
+ * @param {Number} value 
+ */
+function makePromise(value) {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve(value);
+        }, Math.random() * 1000)
+    })
+}
+/**
+ * 打印结果
+ * @param {Number} value 
+ */
+function print(value) {
+    return value
+}
+
+let promises = [1, 3, 4, 5, 6].map((item, index) => {
+    return makePromise(item)
+});
+
+// 并行执行
+Promise.all(promises)
+    .then(() => {
+        console.log('done')
+    })
+    .catch(() => {
+        console.log('error')
+    })
+
+// 串行执行
+let parallelPromises = promises.reduce(
+    (total, currentValue) => total.then(() => currentValue.then(print)), Promise.resolve()
+)
+
+parallelPromises
+    .then(() => {
+        // console.log('done')
+    })
+    .catch(() => {
+        console.log('done')
+    })
+
+// 顺带复习一下reduce方法
+
+reduce((total, currentValue, currentIndex, arr) => {}, initialValue)
+let arr1 = [1, 2, 3, 4, 5]
+let res = arr1.reduce((total, currentValue, currentIndex, arr) => {
+    return total + currentValue
+});
+```
+
+``` js
+Array.prototype.zxSlice = function zxSlice() {
+    var arr = [],
+        i = 0,
+        o = 0,
+        len = this.length,
+        one = parseInt(arguments[0]),
+        two = parseInt(arguments[1]);
+    //只有有参数时才会进入下面，没有参数时，i和len的值为默认值，走下面的for循环，复制this的值，返回出去
+    if (arguments.length) {
+        if (one > len || two == 0) return []; // 只有一个参数并且大于数组长度时返回空数组
+        if (one >= 0) //第一个参数是正数的时候
+            i = one;
+        else //第一个参数是负数的时候
+            i = len + one;
+        if (two) { //如果有第二个参数
+            if (two > len) //如果第二个参数大于数组长度时，len 等于数组的长度
+                len = len;
+            else if (two >= 0) //第二个参数为正数的时候
+                len = two;
+            else //第二个参数为负数的时候
+                len = len + two;
+        };
+    };
+    for (i; i < len; i++) {
+        arr[o] = this[i];
+        o++;
+    }
+
+    return arr;
+}
+```
 
 ## 代码题
 
@@ -365,3 +461,27 @@ str. split(" ")//["i, am, xiong"]
 ## 数组乱排
 
 ## 用class写出发布者订阅模式，实现on，off，once(一次绑定)
+
+## 打点如何设计，打点如何不遗漏，如何全局捕获 Promise 异常？
+
+```js
+window.addEventListener('unhandlerejection', function(event){
+    
+})
+```
+
+[如何优雅处理前端异常](https://blog.fundebug.com/2018/12/07/how-to-handle-frontend-error/)
+
+## 如何解决请求拦截的安全问题
+
+### 如何做内容加密？如何解决请求重放？
+
+## 二向箔重构做了哪些事情？
+
+## 线上问题如何排查
+
+## 随机生成1000个1到1000以内的数字
+
+## 同内容同 hash 文件更新，缓存如何让缓存继续生效
+
+## 字符串消消乐 大于几个字母的时候消除

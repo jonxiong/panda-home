@@ -11,6 +11,9 @@
   - [src和href的区别](#src和href的区别)
   - [script标签中defer和async的区别](#script标签中defer和async的区别)
   - [iframe有那些缺点](#iframe有那些缺点)
+  - [页面生命周期](#页面生命周期)
+    - [监控网页崩溃](#监控网页崩溃)
+    - [如何优雅处理前端异常](#如何优雅处理前端异常)
 
 ## doctype的作用是什么
 
@@ -37,7 +40,7 @@ DOCTYPE是html5标准网页声明，且必须声明在HTML文档的第一行。�
 
 * 区分HTML和XHTML
   + XHTML: 文档开头 `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">` . 有严格版、过渡版、框架版等几个版本
-  + HTML: `<!DOCTYPE html>` 
+  + HTML: `<!DOCTYPE html>`
 
 ## 什么是data-属性
 
@@ -172,6 +175,21 @@ iframe会阻塞主页面的Onload事件
 搜索引擎的检索程序无法解读这种页面，不利于SEO
 iframe和主页面共享连接池，而浏览器对相同域的连接有限制，所以会影响页面的并行加载
 使用iframe之前需要考虑这两个缺点。如果需要使用iframe，最好是通过javascript动态给iframe添加src属性值，这样可以绕开以上两个问题
+
+## 页面生命周期
+
+* **readystatechange**:
+    - loading: 文档仍然在加载
+    - interactive: 文档结束加载并且被解析，但是想图片，样式，frame之类的子资源仍在加载
+    - complete: 文档和子资源已经结束加载，该状态表明将要触发load事件
+* **DOMContentLoaded**: 浏览器已经完全加载了HTML，DOM树已经构建完毕，但是像是 <img> 和样式表等外部资源可能并没有下载完毕
+* **load**: 浏览器已经加载了所有的资源（图像，样式表等
+* **beforeunload**: 在用户即将离开页面时触发
+* **unload**: 在用户已经离开时触发
+
+### [监控网页崩溃](https://juejin.im/entry/5be158116fb9a049c6434f4a)
+
+### [如何优雅处理前端异常](https://blog.fundebug.com/2018/12/07/how-to-handle-frontend-error/)
 
 ---
 参考链接：
